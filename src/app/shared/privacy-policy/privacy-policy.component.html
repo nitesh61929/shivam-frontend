@@ -1,0 +1,33 @@
+<pdf-viewer
+  [src]="privacyPolicy?.resource_path"
+  [render-text]="true"
+  [fit-to-page]="true"
+  *ngIf="privacyPolicy?.resource_path"
+></pdf-viewer>
+
+<div
+  class="error-page-wrapper document-not-found"
+  *ngIf="!privacyPolicy?.resource_path"
+>
+  <div class="container">
+    <mat-card>
+      <mat-card-content
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="center center"
+      >
+        <figure>
+          <img src="assets/broken.png" alt="Broken Link" />
+        </figure>
+        <div>
+          <h2>Sorry!!</h2>
+          <p>The document you are trying to view cannot be found.</p>
+          <!-- <p>
+            <a class="text-link" routerLink="/">Back to Home</a>
+          </p> -->
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

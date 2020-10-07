@@ -1,0 +1,51 @@
+%headerIconBorder {
+  content: "";
+  width: 1px;
+  height: 1rem;
+  background: $white;
+  position: absolute;
+  top: 12px;
+}
+header {
+  padding: 1rem 1.5rem 0;
+  background: $primary;
+  text-align: right;
+  color: $white;
+  .welcome-text {
+    @include pxtorem(14);
+  }
+  .icon-profile {
+    padding: 0 1rem;
+    margin: 0 1rem;
+    position: relative;
+    height: 40px;
+    display: inline-block;
+    &:before {
+      @extend %headerIconBorder;
+      left: 0;
+    }
+    &:after {
+      @extend %headerIconBorder;
+      right: 0;
+    }
+  }
+  .icon-logout {
+    background: rgba($white, 0.9);
+    color: $red;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    border-radius: 50%;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      background: rgba($white, 1);
+    }
+  }
+}
+.toggle {
+  position: absolute !important;
+  top: 1rem;
+  left: 1rem;
+  // display: none !important;
+  color: $white;
+}

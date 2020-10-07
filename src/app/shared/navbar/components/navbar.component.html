@@ -1,0 +1,17 @@
+<header>
+  <span class="welcome-text">{{ greetUser() }}</span>
+  <span class="icon-profile">
+    <a mat-icon-button (click)="onProfileClick()">
+      <mat-icon>
+        <app-material-icon [iconName]="'ACCOUNT'"></app-material-icon>
+      </mat-icon>
+    </a>
+  </span>
+  <span class="icon-logout">
+    <a mat-icon-button (click)="onLogout()">
+      <mat-icon>
+        <app-material-icon [iconName]="'LOGOUT'"></app-material-icon>
+      </mat-icon>
+    </a>
+  </span>
+</header>

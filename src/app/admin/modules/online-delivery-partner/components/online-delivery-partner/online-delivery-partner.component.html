@@ -1,0 +1,8 @@
+<app-page-header
+  [pageHeaderOptions]="pageHeaderOptions"
+  (addClick)="onAddOnlineDeliveryPartner()"
+></app-page-header>
+
+<div class="page-content" *appHasAccess="hasListAccess">
+  <app-online-delivery-partner-list-container></app-online-delivery-partner-list-container>
+</div>

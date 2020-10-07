@@ -1,0 +1,65 @@
+<app-form
+  [formOptions]="formOptions"
+  (save)="onSaveDocumentsForm()"
+  (cancel)="onCancelDocumentsForm()"
+  class="documents-form"
+>
+  <div
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start"
+  >
+    <div
+      fxLayout="column"
+      fxLayoutGap="16px"
+      fxLayoutAlign="start"
+      fxFlex="1 1 calc(50% - 16px)"
+      fxFlex.lt-md="1 1 100%"
+      [formGroup]="termsAndConditionForm"
+    >
+      <h3>{{ "terms_and_conditions" | translate }}</h3>
+      <div class="has-img-preview">
+        <app-file-upload
+          (clearFile)="onClearTermsAndConditions()"
+          formControlName="resource_path"
+          [fileSrc]="termsAndConditions?.resource_path"
+          [fileType]="termsAndConditions?.resource_path ? 'pdf' : ''"
+          [btnLabel]="'upload_pdf_label' | translate"
+          [info]="'pdf_info' | translate"
+        ></app-file-upload>
+        <mat-error>
+          <app-error-message
+            [control]="termsAndConditionForm.get('resource_path')"
+          ></app-error-message>
+        </mat-error>
+      </div>
+    </div>
+
+    <div
+      fxLayout="column"
+      fxLayoutGap="16px"
+      fxLayoutAlign="start"
+      fxFlex="1 1 calc(50% - 16px)"
+      fxFlex.lt-md="1 1 100%"
+      [formGroup]="privacyPolicyForm"
+    >
+      <h3>{{ "privacy_policy" | translate }}</h3>
+      <div class="has-img-preview">
+        <app-file-upload
+          (clearFile)="onClearPrivacyPolicy()"
+          formControlName="resource_path"
+          [fileSrc]="privacyPolicy?.resource_path"
+          [fileType]="privacyPolicy?.resource_path ? 'pdf' : ''"
+          [btnLabel]="'upload_pdf_label' | translate"
+          [info]="'pdf_info' | translate"
+        ></app-file-upload>
+        <mat-error>
+          <app-error-message
+            [control]="privacyPolicyForm.get('resource_path')"
+          ></app-error-message>
+        </mat-error>
+      </div>
+    </div>
+  </div>
+</app-form>

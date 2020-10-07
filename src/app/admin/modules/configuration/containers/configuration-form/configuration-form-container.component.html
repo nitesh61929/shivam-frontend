@@ -1,0 +1,9 @@
+<app-configuration-form
+  #configurationFormCmp
+  (saveOrUpdateConfiguration)="onSaveOrUpdateConfiguration($event)"
+  [configurations$]="configurations$"
+></app-configuration-form>
+
+<div class="spinner" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

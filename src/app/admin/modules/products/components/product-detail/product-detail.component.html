@@ -1,0 +1,97 @@
+<div
+  class="page-title"
+  fxLayout="row"
+  fxLayoutGap="16px"
+  fxLayoutAlign="space-between center"
+>
+  <h2 class="page-title-content">
+    {{ "product_detail_label" | translate }}
+  </h2>
+</div>
+
+<div class="container-fluid is-product-detail fxFlex fxFlexWrap">
+  <div class="product-info">
+    <mat-card class="detail-component" [class]="detailOptions?.formClass">
+      <button
+        mat-icon-button
+        class="theme-icon-alternate is-edit"
+        (click)="onEditClick()"
+        *appHasAccess="hasEditAccess"
+        matTooltip="{{ 'edit_record' | translate }}"
+      >
+        <mat-icon>
+          <app-material-icon [iconName]="'EDIT'"></app-material-icon>
+        </mat-icon>
+      </button>
+
+      <mat-card-content class="fxFlex fxFlexWrap">
+        <figure class="img-preview">
+          <img [src]="productDetail.image_url" />
+        </figure>
+
+        <div class="product-basic-info">
+          <h3>{{ productDetail.name }}</h3>
+
+          <div class="span">
+            <label>{{ "module_allocated_label" | translate }}</label>
+            <span>
+              {{
+                moduleAllocationEnum[productDetail?.is_for_consumer] | translate
+              }}
+            </span>
+          </div>
+
+          <div class="span">
+            <label>{{ "minimum_quantity_label" | translate }}</label>
+            <span>{{ productDetail?.min_order_quantity | number }}</span>
+          </div>
+
+          <div class="span">
+            <label>{{ "maximum_quantity_label" | translate }}</label>
+            <span>{{ productDetail?.max_order_quantity | number }}</span>
+          </div>
+
+          <div class="span product-short-desc">
+            <label> {{ "short_description" | translate }}</label>
+            <span>{{ productDetail?.meta_description }}</span>
+          </div>
+        </div>
+
+        <div class="span product-desc" *ngIf="productDetail?.description">
+          <label>{{ "long_description" | translate }}</label>
+          <span>{{ productDetail?.description }}</span>
+        </div>
+
+        <a class="text-link link-back-list" (click)="onBackClick()">
+          <mat-icon>
+            <app-material-icon [iconName]="'BACK_ARROW'"></app-material-icon>
+          </mat-icon>
+          <span>{{ "back_to_list_label" | translate }}</span>
+        </a>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="configure-price" *appHasAccess="hasPriceAddAccess">
+    <mat-card>
+      <app-price-form-container
+        #priceFormContainerCmp
+        (updateFormSuccess)="onUpdateFormSuccess()"
+        (addFormSuccess)="onAddFormSuccess()"
+        [deliveryLocationList]="deliveryLocationList"
+        [productId]="productDetail?.id"
+        [productDetail]="productDetail"
+      ></app-price-form-container>
+    </mat-card>
+  </div>
+
+  <div class="configured-price-lists" *appHasAccess="hasPriceListAccess">
+    <app-price-list-container
+      #PriceListContainerCmp
+      [productId]="productDetail?.id"
+      (editPrice)="onEditPrice($event)"
+    ></app-price-list-container>
+  </div>
+</div>
+
+<div class="container-fluid"></div>

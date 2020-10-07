@@ -1,0 +1,95 @@
+<mat-card fxFlex="1 1 calc(30% - 8px)" fxFlex.lt-md="1 1 100%">
+  <ng-container *ngIf="checkAssignODPStatus()">
+    <mat-card-content *appHasAccess="checkAccess()">
+      <form [formGroup]="assignDealerForm" #formDirective="ngForm">
+        <div class="assign-dealer">
+          <h3>
+            {{ getTitle() }}
+          </h3>
+          <mat-form-field appearance="fill">
+            <input
+              type="text"
+              [placeholder]="'search_delivery_partner' | translate"
+              matInput
+              [matAutocomplete]="auto"
+              formControlName="dealer"
+            />
+            <mat-autocomplete
+              #auto="matAutocomplete"
+              [displayWith]="getDisplayName"
+            >
+              <mat-option class="spinner" *ngIf="isLoading">
+                <mat-spinner diameter="50"></mat-spinner>
+              </mat-option>
+
+              <ng-container *ngIf="!isLoading">
+                <mat-option
+                  *ngFor="let onlineDeliveryPartner of filteredOptions"
+                  [value]="onlineDeliveryPartner"
+                >
+                  {{ getDisplayName(onlineDeliveryPartner) }}
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+            <mat-error>
+              <app-error-message
+                [control]="assignDealerForm.get('dealer')"
+              ></app-error-message>
+            </mat-error>
+          </mat-form-field>
+          <mat-icon
+            ><app-material-icon [iconName]="'SEARCH'"></app-material-icon
+          ></mat-icon>
+        </div>
+
+        <mat-card-actions>
+          <button
+            mat-raised-button
+            color="warn"
+            [class]="getClass()"
+            (click)="onAssignOrRevoke()"
+            [disabled]="assignDealerForm?.invalid"
+            *appHasAccess="checkAccess()"
+          >
+            <mat-icon
+              ><app-material-icon [iconName]="getIconName()"></app-material-icon
+            ></mat-icon>
+            {{ getBtnLabel() }}
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card-content>
+  </ng-container>
+
+  <ng-container *appHasAccess="hasCancelOrderAccess">
+    <mat-card-content *ngIf="checkStatusForCancelOrder()">
+      <div class="cancel-order-form">
+        <form [formGroup]="cancelOrderForm" #formDirective="ngForm">
+          <h3>{{ "cancel_orders" | translate }}</h3>
+          <mat-form-field appearance="fill">
+            <textarea
+              [placeholder]="'reason_info' | translate"
+              matInput
+              formControlName="reason"
+            ></textarea>
+            <mat-error>
+              <app-error-message
+                [control]="cancelOrderForm.get('reason')"
+              ></app-error-message>
+            </mat-error>
+          </mat-form-field>
+          <mat-card-actions>
+            <button mat-raised-button color="warn" (click)="onCancelOrder()">
+              <mat-icon>
+                <app-material-icon
+                  [iconName]="getIconName()"
+                ></app-material-icon>
+              </mat-icon>
+              {{ "cancel_orders" | translate }}
+            </button>
+          </mat-card-actions>
+        </form>
+      </div>
+    </mat-card-content>
+  </ng-container>
+</mat-card>

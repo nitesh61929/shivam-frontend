@@ -1,0 +1,7 @@
+<app-navbar
+  (logoutClicked)="onLogoutClicked()"
+  (profileClicked)="onProfileClicked()"
+  [userName]="userName"
+  [fullName]="fullName"
+  [firstName]="this.profileDetails?.first_name"
+></app-navbar>

@@ -1,0 +1,20 @@
+.mat-paginator {
+  @include pxtorem(14);
+  font-family: $mainFont !important;
+  padding: 0.75rem 0.75rem 0;
+  &-container {
+    justify-content: space-between !important;
+  }
+  .mat-form-field-infix {
+    background: rgba($black, 0.03);
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+    border: 0;
+  }
+  .mat-select-arrow {
+    transform: translateY(0);
+  }
+  .mat-select-trigger {
+    @include pxtorem(14);
+  }
+}

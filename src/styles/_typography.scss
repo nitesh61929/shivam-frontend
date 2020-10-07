@@ -1,0 +1,120 @@
+%headers {
+  font-family: $mainFont !important;
+  font-weight: 600 !important;
+}
+
+@for $h from 1 through 6 {
+  h#{$h} {
+    @extend %headers;
+  }
+}
+
+.helper-text {
+  color: $primary;
+  @include pxtorem(14);
+  .mat-icon {
+    vertical-align: middle;
+  }
+  .auth-form-container & {
+    margin-bottom: 2rem;
+  }
+}
+
+.text-link {
+  color: $primary;
+  @include pxtorem(16);
+  transition: all 0.25s ease;
+  text-decoration: underline;
+  cursor: pointer;
+  &:hover {
+    color: darken($primary, 5%);
+  }
+}
+.link-back-list {
+  margin-top: 2rem;
+  display: inline-block;
+  .mat-icon {
+    vertical-align: middle;
+  }
+  span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .records-table & {
+    padding-left: 1.25rem;
+  }
+}
+.section-header {
+  &-content {
+    @include pxtorem(25);
+    color: $primary;
+    font-weight: 700;
+  }
+}
+.page-title-content {
+  @include pxtorem(25);
+  font-weight: 700 !important;
+  color: $white;
+  margin: 0 !important;
+  font-family: $mainFont !important;
+}
+.text-error {
+  color: $error;
+}
+.order-status {
+  text-transform: capitalize;
+  padding: 1px 4px;
+  border-radius: 0.25rem;
+  color: $white;
+  &.status-cancelled {
+    background-color: $error;
+  }
+  &.status-allocated {
+    background-color: $blueGreen;
+  }
+  &.status-processing {
+    background-color: $lightPrimary;
+  }
+  &.status-unpaid {
+    background-color: darken($gray, 30%);
+  }
+  &.status-delivered {
+    background-color: $lightGreen;
+  }
+  &.status-completed {
+    background-color: $primary;
+  }
+  &.status-confirmed {
+    background-color: $yellow;
+  }
+}
+
+.announcement-status {
+  text-transform: capitalize;
+  padding: 1px 4px;
+  border-radius: 0.25rem;
+  color: $white;
+  width: 120px;
+  text-align: center;
+  &.published {
+    background-color: $primary;
+  }
+  &.unpublished {
+    background-color: $textColor;
+  }
+}
+
+.media-exceed-limit {
+  margin-bottom: 1.75rem;
+}
+
+.expired-label {
+  margin: 0.5rem 0 0 0 !important;
+  span {
+    font-size: 14px;
+    padding: 2px 4px;
+    background: darken($gray, 10%);
+    border-radius: 2px;
+    color: $textColor;
+  }
+}

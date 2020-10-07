@@ -1,0 +1,11 @@
+<app-product-form
+  #productFormCmp
+  [productDetail$]="productDetail$"
+  [moduleAllocations]="moduleAllocations"
+  (saveOrUpdateProduct)="onSaveOrUpdateProduct($event)"
+  (cancelProduct)="onCancelProduct()"
+></app-product-form>
+
+<div class="spinner" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

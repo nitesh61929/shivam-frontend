@@ -1,0 +1,13 @@
+<app-consumer-form
+  #consumerFormCmp
+  [error$]="error$"
+  (updateConsumer)="onUpdateConsumer($event)"
+  (cancelConsumer)="onCancelConsumer()"
+  [consumerDetail$]="consumerDetail$"
+  [provincesWithDistricts]="provincesWithDistricts"
+>
+</app-consumer-form>
+
+<div class="spinner" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

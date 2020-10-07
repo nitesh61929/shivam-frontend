@@ -1,0 +1,137 @@
+<div class="stats-overview">
+  <div
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start"
+  >
+    <mat-card class="stats-overview-counter">
+      <mat-card-content>
+        <h2>{{ totalConsumers | number }}</h2>
+        <mat-card-subtitle>{{ "customers" | translate }}</mat-card-subtitle>
+        <mat-icon>
+          <app-material-icon [iconName]="'CONSUMERS'"></app-material-icon>
+        </mat-icon>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stats-overview-counter">
+      <mat-card-content>
+        <h2>{{ availableSmsCredits | number }}</h2>
+        <mat-card-subtitle>{{
+          "available_sms_credit" | translate
+        }}</mat-card-subtitle>
+        <mat-icon>
+          <app-material-icon [iconName]="'SMS'"></app-material-icon>
+        </mat-icon>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <mat-card class="chart-wrapper">
+    <mat-card-content>
+      <mat-card-title>{{ "orders" | translate }}</mat-card-title>
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutAlign="start"
+        fxLayoutAlign.xs="start"
+        class="records-filter section-header fxFlex fxFlexWrap"
+      >
+        <div class="date-field fxFlex--item">
+          <app-date-range
+            (dateRangeSelected)="onDateRangeForOrderAmountSelect($event)"
+            [startDate]="startDate"
+            [endDate]="endDate"
+            [showClearButton]="false"
+          ></app-date-range>
+        </div>
+
+        <div class="search-filter fxFlex--item">
+          <mat-checkbox
+            class="payment-filter"
+            (change)="onPaymentDueChangeForOrderAmount($event)"
+            >{{ "payment_due" | translate }}</mat-checkbox
+          >
+        </div>
+
+        <div class="search-filter fxFlex--item"></div>
+      </div>
+      <ngx-charts-line-chart
+        #ordersAmountChart
+        (window:resize)="onResize($event)"
+        [view]="view"
+        [scheme]="colorScheme"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="false"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [results]="ordersAmountChartData"
+        [xAxisTickFormatting]="dateFormatting"
+      >
+        <ng-template #tooltipTemplate let-model="model">
+          Date: {{ dateFormatting(model.name) }} <br />
+          Amount: {{ model.value }}
+        </ng-template>
+      </ngx-charts-line-chart>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="chart-wrapper">
+    <mat-card-content>
+      <mat-card-title>{{ "payment" | translate }}</mat-card-title>
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutAlign="start"
+        fxLayoutAlign.xs="start"
+        class="records-filter section-header fxFlex fxFlexWrap"
+      >
+        <div class="date-field fxFlex--item">
+          <app-date-range
+            (dateRangeSelected)="
+              onDateRangeForOrderByPaymentMethodSelect($event)
+            "
+            [startDate]="startDate"
+            [endDate]="endDate"
+            [showClearButton]="false"
+          ></app-date-range>
+        </div>
+        <div class="search-filter fxFlex--item">
+          <mat-checkbox
+            class="payment-filter"
+            (change)="onPaymentDueChangeForOrderByPaymentMethod($event)"
+            >{{ "payment_due" | translate }}</mat-checkbox
+          >
+        </div>
+
+        <div class="search-filter fxFlex--item"></div>
+      </div>
+      <ngx-charts-line-chart
+        [scheme]="colorScheme"
+        [view]="view"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [results]="paymentAmountChart"
+        [xAxisTickFormatting]="dateFormatting"
+      >
+        <ng-template #tooltipTemplate let-model="model">
+          Date: {{ dateFormatting(model.name) }} <br />
+          Amount: {{ model.value }}
+        </ng-template>
+      </ngx-charts-line-chart>
+    </mat-card-content>
+  </mat-card>
+</div>

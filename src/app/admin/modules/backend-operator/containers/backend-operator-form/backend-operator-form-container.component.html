@@ -1,0 +1,12 @@
+<app-backend-operator-form
+  #backendOperatorFormCmp
+  (saveOrUpdateBackendOperator)="onSaveOrUpdateBackendOperator($event)"
+  (cancelBackendOperator)="onCancelBackendOperator()"
+  [permissions]="permissions"
+  [backendOperatorId]="backendOperatorId"
+  [backendOperatorDetail]="backendOperatorDetail"
+></app-backend-operator-form>
+
+<div class="spinner" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

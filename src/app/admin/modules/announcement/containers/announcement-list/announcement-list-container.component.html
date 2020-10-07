@@ -1,0 +1,15 @@
+<app-announcement-list
+  #announcementListCmp
+  [announcementList$]="announcementList$"
+  [pagination$]="pagination$"
+  (paramChanged)="onParamChange($event)"
+  [announcementTypes$]="announcementTypes$"
+  (announcementEdit)="onEditAnnouncement($event)"
+  (announcementDelete)="onDeleteAnnouncement($event)"
+  (announcementDetail)="onAnnouncementDetail($event)"
+  (toggleAnnouncement)="onToggleAnnouncement($event)"
+></app-announcement-list>
+
+<div class="spinner" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

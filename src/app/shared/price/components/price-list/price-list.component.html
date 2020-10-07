@@ -1,0 +1,113 @@
+<div class="table-wrapper">
+  <mat-card class="records-table-configured-price-lists records-table">
+    <div
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayoutAlign="space-between center"
+      class="section-header"
+    >
+      <h3 class="price-section-title">
+        {{ "configured_price_list_label" | translate }}
+      </h3>
+    </div>
+    <div
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayoutAlign="start"
+      fxLayoutAlign.xs="start"
+      class="records-filter section-header fxFlex fxFlexWrap"
+    >
+      <div class="search-filter fxFlex--item">
+        <app-search-input (searched)="onSearch($event)"></app-search-input>
+      </div>
+      <div class="has-button fxFlex--item" *ngIf="listLength > 0">
+        <app-download
+          *appHasAccess="hasDownloadAccess"
+          [downloadOptions]="downloadOptions"
+          [parameters]="parameters"
+        ></app-download>
+      </div>
+    </div>
+
+    <ng-container *ngIf="listLength === 0">
+      <div class="no-results">
+        <p class="no-records">{{ "no_recorded_data_label" | translate }}</p>
+      </div>
+    </ng-container>
+
+    <table mat-table [dataSource]="dataSource" *ngIf="listLength > 0">
+      <ng-container matColumnDef="delivery_location_name">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "delivery_location_name_label" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let price">
+          {{ price?.delivery_location?.name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "price_label" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let price">
+          {{ price.price | currency: "Rs. ":"symbol" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="unit">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "unit_label" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let price">{{ price.unit }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="discount_amount">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "discount_amount_label" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let price">
+          <ng-container>{{
+            price.discount_amount | currency: "Rs. ":"symbol"
+          }}</ng-container>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="foc">
+        <th mat-header-cell *matHeaderCellDef>{{ "foc_label" | translate }}</th>
+        <td mat-cell *matCellDef="let price">
+          {{ (price.foc | number) || "N/A" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="foc_eligible_qty">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "foc_quantity_label" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let price">
+          {{ (price.foc_eligible_count | number) || "N/A" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "actions_label" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let price">
+          <app-actions
+            [actions]="actions"
+            (actionClicked)="onActionClicked($event, price?.id)"
+          ></app-actions>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+      [length]="listLength"
+      [pageSize]="perPage"
+      [pageSizeOptions]="getDefaultPageSizeOptions()"
+    >
+    </mat-paginator>
+  </mat-card>
+</div>

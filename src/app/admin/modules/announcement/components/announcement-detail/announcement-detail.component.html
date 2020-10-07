@@ -1,0 +1,137 @@
+<div
+  class="page-title"
+  fxLayout="row"
+  fxLayoutGap="16px"
+  fxLayoutAlign="space-between center"
+>
+  <h2 class="page-title-content">{{ "announcement_detail" | translate }}</h2>
+</div>
+
+<div class="container-fluid">
+  <mat-card class="announcement-detail detail-component">
+    <button
+      mat-icon-button
+      class="theme-icon-alternate is-edit"
+      (click)="onEditClick()"
+      *appHasAccess="hasEditAccess"
+      matTooltip="{{ 'edit_record' | translate }}"
+    >
+      <mat-icon>
+        <app-material-icon [iconName]="'EDIT'"></app-material-icon>
+      </mat-icon>
+    </button>
+    <mat-card-content>
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start"
+      >
+        <div
+          class="announcement-media"
+          fxFlex="1 1 calc(40% - 1rem)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <figure
+            class="image-wrapper"
+            *ngIf="isImage(announcementDetail?.resource_type)"
+          >
+            <img [src]="announcementDetail?.resource_path" />
+          </figure>
+
+          <div
+            class="video-preview"
+            [class.playing]="isClassPlaying(announcementDetail)"
+            *ngIf="announcementDetail?.resource_type === 'mp4'"
+          >
+            <video
+              id="announcement-video"
+              [src]="announcementDetail?.resource_path"
+              height="200"
+              controls
+            ></video>
+            <figure class="image-wrapper">
+              <img [src]="announcementDetail.thumbnail" />
+              <span class="overlay">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  (click)="onPlayIconClick()"
+                >
+                  <mat-icon>play_circle_outline</mat-icon>
+                </button>
+              </span>
+            </figure>
+          </div>
+
+          <div
+            class="pdf-preview"
+            [ngClass]="{
+              'preview-has-thumbnail': announcementDetail.thumbnail
+            }"
+            *ngIf="announcementDetail?.resource_type === 'pdf'"
+          >
+            <img
+              [src]="
+                announcementDetail.thumbnail
+                  ? announcementDetail.thumbnail
+                  : 'assets/thumb-pdf.png'
+              "
+              alt="PDF"
+            />
+            <a [href]="announcementDetail?.resource_path" target="blank">
+              {{ "preview_file" | translate }}
+            </a>
+          </div>
+        </div>
+
+        <div
+          fxFlex="1 1 calc(60% - 1rem)"
+          fxFlex.lt-md="1 1 100%"
+          fxLayout="column"
+          fxLayoutGap="16px"
+          fxLayoutAlign="start"
+          class="announcement-info"
+        >
+          <h3>{{ announcementDetail?.title }}</h3>
+          <span
+            class="announcement-status"
+            [class]="getStatusClass(announcementDetail)"
+          >
+            {{ announcementStatusEnum[announcementDetail?.status] | translate }}
+          </span>
+          <span>
+            <label>{{ "start_date" | translate }}</label>
+            {{
+              getFormattedDate(announcementDetail.starts_at) | date: "shortDate"
+            }}</span
+          >
+          <span>
+            <label>{{ "end_date" | translate }}</label>
+            {{
+              getFormattedDate(announcementDetail.ends_at) | date: "shortDate"
+            }}</span
+          >
+          <span>
+            <label>{{ "type_label" | translate }}</label>
+            {{ announcementDetail.type | translate }}
+          </span>
+          <span>
+            <label>{{ "intended_for" | translate }}</label>
+            {{
+              moduleAllocationEnum[announcementDetail?.is_for_consumer]
+                | translate
+            }}
+          </span>
+        </div>
+      </div>
+
+      <a class="text-link link-back-list" (click)="onBackClick()">
+        <mat-icon>
+          <app-material-icon [iconName]="'BACK_ARROW'"></app-material-icon>
+        </mat-icon>
+        <span>{{ "back_to_list_label" | translate }}</span>
+      </a>
+    </mat-card-content>
+  </mat-card>
+</div>

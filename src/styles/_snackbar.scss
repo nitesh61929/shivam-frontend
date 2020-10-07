@@ -1,0 +1,15 @@
+.mat-simple-snackbar {
+  .mat-button-wrapper {
+    font-family: "Material Icons", serif;
+    line-height: 24px;
+  }
+}
+.blue-snackbar {
+  background: $blueGreen;
+}
+.green-snackbar {
+  background: $primary;
+}
+.red-snackbar {
+  background: darken($error, 10%);
+}

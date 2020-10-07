@@ -1,0 +1,14 @@
+<app-orders-list
+  (orderDetail)="viewOrderDetail($event)"
+  [orderList$]="orderList$"
+  [pagination$]="pagination$"
+  [orderStatuses$]="orderStatuses$"
+  (paramChanged)="onParamChange($event)"
+  [grandTotal$]="grandTotal$"
+  [downloadOptions]="downloadOptions"
+  [parameters]="getParam()"
+></app-orders-list>
+
+<div class="spinner" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

@@ -1,0 +1,156 @@
+<div class="full form-container">
+  <form [formGroup]="priceForm" #formDirective="ngForm" id="price-form">
+    <h3 class="price-section-title">
+      {{ "price_configuration_label" | translate }}
+    </h3>
+    <div class="delivery-location-form--price-section">
+      <div class="select-location fxFlex fxFlexWrap">
+        <div class="isInlineSm formRow fxFlexWrap fxFlex">
+          <label> {{ "delivery_location" | translate }}* </label>
+          <mat-form-field appearance="fill">
+            <mat-select
+              formControlName="delivery_location_id"
+              [placeholder]="'select_delivery_location_label' | translate"
+            >
+              <mat-option
+                *ngFor="let deliveryLocation of deliveryLocationList"
+                [value]="deliveryLocation.id"
+              >
+                {{ deliveryLocation.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <app-error-message
+                [control]="priceForm.get('delivery_location_id')"
+              ></app-error-message
+            ></mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="product-basic-fields fxFlexWrap fxFlex">
+        <div class="isInlineSm formRow fxFlexWrap fxFlex">
+          <label>
+            {{ "price_label" | translate }}
+          </label>
+          <mat-form-field appearance="fill">
+            <input
+              matInput
+              type="number"
+              formControlName="price"
+              appOnlyNumber
+              [decimal]="true"
+            />
+            <mat-error>
+              <app-error-message
+                [control]="priceForm.get('price')"
+              ></app-error-message
+            ></mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="isInlineSm formRow fxFlexWrap fxFlex">
+          <label> {{ "discount_label" | translate }}* </label>
+          <mat-form-field appearance="fill">
+            <input
+              matInput
+              type="number"
+              formControlName="discount_amount"
+              appOnlyNumber
+              [decimal]="true"
+            />
+            <mat-error>
+              <app-error-message
+                [control]="priceForm.get('discount_amount')"
+              ></app-error-message
+            ></mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-error
+          class="compare-error price-discount-compare"
+          *ngIf="priceForm.errors?.priceDiscountCompare"
+        >
+          {{ "price_discount_compare" | translate }}
+        </mat-error>
+
+        <div class="isInlineSm formRow fxFlexWrap fxFlex">
+          <label> {{ "unit_label" | translate }}* </label>
+
+          <mat-form-field appearance="fill">
+            <input matInput type="text" formControlName="unit" />
+            <mat-error>
+              <app-error-message
+                [control]="priceForm.get('unit')"
+              ></app-error-message
+            ></mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="product-foc-fields fxFlexWrap fxFlex">
+        <div class="isInlineSm formRow fxFlexWrap fxFlex">
+          <label> {{ "foc_label" | translate }}* </label>
+
+          <mat-form-field appearance="fill">
+            <input matInput type="number" appOnlyNumber formControlName="foc" />
+            <mat-error>
+              <app-error-message
+                [control]="priceForm.get('foc')"
+              ></app-error-message
+            ></mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="isInlineSm formRow fxFlexWrap fxFlex">
+          <label> {{ "foc_quantity_label" | translate }}* </label>
+
+          <mat-form-field appearance="fill">
+            <input
+              matInput
+              type="number"
+              appOnlyNumber
+              formControlName="foc_eligible_count"
+            />
+            <mat-error>
+              <app-error-message
+                [control]="priceForm.get('foc_eligible_count')"
+              ></app-error-message
+            ></mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-error class="compare-error" *ngIf="priceForm.errors?.focCompare">
+          {{ "foc_compare" | translate }}
+        </mat-error>
+      </div>
+
+      <mat-card-actions>
+        <button
+          mat-raised-button
+          color="warn"
+          class="theme-alternate"
+          (click)="onSaveOrUpdate()"
+        >
+          <mat-icon
+            ><app-material-icon [iconName]="'SAVE'"></app-material-icon
+          ></mat-icon>
+          {{ getSaveLabel() }}
+        </button>
+
+        <button
+          mat-raised-button
+          color="warn"
+          class="theme-gray"
+          (click)="onCancel()"
+          *ngIf="priceDetail"
+        >
+          <mat-icon
+            ><app-material-icon [iconName]="'BLOCK'"></app-material-icon
+          ></mat-icon>
+          {{ "cancel_label" | translate }}
+        </button>
+      </mat-card-actions>
+    </div>
+  </form>
+</div>

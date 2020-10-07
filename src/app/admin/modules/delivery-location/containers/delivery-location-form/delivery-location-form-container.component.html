@@ -1,0 +1,12 @@
+<app-delivery-location-form
+  #deliveryLocationFormCmp
+  [provincesWithDistricts]="provincesWithDistricts"
+  [loading$]="loading$"
+  (saveOrUpdateDeliveryLocation)="onSaveOrUpdateDeliveryLocation($event)"
+  (cancelDeliveryLocation)="onCancelDeliveryLocation()"
+  [deliveryLocationDetail]="deliveryLocationDetail"
+></app-delivery-location-form>
+
+<div class="spinner" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

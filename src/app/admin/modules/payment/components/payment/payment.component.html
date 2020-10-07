@@ -1,0 +1,5 @@
+<app-page-header [pageHeaderOptions]="pageHeaderOptions"></app-page-header>
+
+<ng-container *appHasAccess="hasListAccess">
+  <app-payment-list-container></app-payment-list-container>
+</ng-container>

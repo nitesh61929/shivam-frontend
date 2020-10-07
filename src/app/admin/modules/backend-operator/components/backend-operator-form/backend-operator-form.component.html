@@ -1,0 +1,289 @@
+<app-form
+  [formOptions]="formOptions"
+  (save)="onSaveOrUpdateBackendOperatorForm()"
+  (cancel)="onCancelBackendOperatorForm()"
+  [formGroup]="backEndOperatorForm"
+  class="backend-operator-form"
+>
+  <div class="basic-info-section">
+    <ng-container formGroupName="details">
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start space-between"
+        fxLayoutAlign.lt-md="start"
+        class="fxFlexWrap"
+      >
+        <div
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="16px"
+          fxLayoutAlign="start center"
+          fxLayoutAlign.lt-md="start"
+          fxFlex="1 1 calc(50% - 16px)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <label fxFlex="1 1 40%" fxFlex.lt-md="1 1 100%"
+            >{{ "first_name_label" | translate }}*</label
+          >
+          <mat-form-field
+            appearance="fill"
+            fxFlex="1 1 calc(60% - 16px)"
+            fxFlex.lt-md="1 1 100%"
+          >
+            <input matInput type="text" formControlName="first_name" />
+            <mat-error>
+              <app-error-message
+                [control]="backEndOperatorForm.get('details').get('first_name')"
+              ></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="16px"
+          fxLayoutAlign="start center"
+          fxLayoutAlign.lt-md="start"
+          fxFlex="1 1 calc(50% - 16px)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <label fxFlex="1 1 40%" fxFlex.lt-md="1 1 100%"
+            >{{ "last_name_label" | translate }}*</label
+          >
+          <mat-form-field
+            appearance="fill"
+            fxFlex="1 1 calc(60% - 16px)"
+            fxFlex.lt-md="1 1 100%"
+          >
+            <input matInput type="text" formControlName="last_name" />
+            <mat-error>
+              <app-error-message
+                [control]="backEndOperatorForm.get('details').get('last_name')"
+              ></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start space-between"
+        fxLayoutAlign.lt-md="start"
+      >
+        <div
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="16px"
+          fxLayoutAlign="start center"
+          fxLayoutAlign.lt-md="start"
+          fxFlex="1 1 calc(50% - 8px)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <label fxFlex="1 1 40%" fxFlex.lt-md="1 1 100%">{{
+            "email_label" | translate
+          }}</label>
+          <mat-form-field
+            appearance="fill"
+            fxFlex="1 1 calc(60% - 16px)"
+            fxFlex.lt-md="1 1 100%"
+          >
+            <input matInput type="text" formControlName="email" />
+            <mat-error>
+              <app-error-message
+                [control]="backEndOperatorForm.get('details').get('email')"
+              ></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="16px"
+          fxLayoutAlign="start center"
+          fxLayoutAlign.lt-md="start"
+          fxFlex="1 1 calc(50% - 8px)"
+          fxFlex.lt-md="1 1 100%"
+        ></div>
+      </div>
+    </ng-container>
+
+    <div
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutGap="16px"
+      fxLayoutAlign="start space-between"
+      fxLayoutAlign.lt-md="start"
+      class="fxFlexWrap"
+    >
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        fxFlex="1 1 calc(50% - 16px)"
+        fxFlex.lt-md="1 1 100%"
+      >
+        <label fxFlex="1 1 40%" fxFlex.lt-md="1 1 100%">{{
+          "mobile_label" | translate
+        }}</label>
+        <mat-form-field
+          appearance="fill"
+          fxFlex="1 1 calc(60% - 16px)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <input matInput type="text" formControlName="mobile_number" />
+          <mat-error>
+            <app-error-message
+              [control]="backEndOperatorForm.get('mobile_number')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        fxFlex="1 1 calc(50% - 16px)"
+        fxFlex.lt-md="1 1 100%"
+      >
+        <label fxFlex="1 1 40%" fxFlex.lt-md="1 1 100%"
+          >{{ "username_label" | translate }}*</label
+        >
+        <mat-form-field
+          appearance="fill"
+          fxFlex="1 1 calc(60% - 16px)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <input matInput type="text" formControlName="username" />
+          <mat-error>
+            <app-error-message
+              [control]="backEndOperatorForm.get('username')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutGap="16px"
+      fxLayoutAlign="start space-between"
+      fxLayoutAlign.lt-md="start"
+      class="fxFlexWrap"
+    >
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        fxFlex="1 1 calc(50% - 16px)"
+        fxFlex.lt-md="1 1 100%"
+        class="pwd-field"
+      >
+        <label fxFlex="1 1 40%" fxFlex.lt-md="1 1 100%">
+          {{ "password" | translate }}*
+        </label>
+        <mat-form-field
+          appearance="fill"
+          fxFlex="1 1 calc(60% - 16px)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <span class="password-input-field">
+            <button
+              mat-icon-button
+              color="primary"
+              aria-label="Generate Password"
+              class="btn-generate-pwd"
+              matTooltip="Generate Password"
+              [matTooltipPosition]="'above'"
+              (click)="generatePassword()"
+            >
+              <mat-icon>
+                <app-material-icon [iconName]="'PASSWORD'"></app-material-icon>
+              </mat-icon>
+            </button>
+            <input
+              matInput
+              type="text"
+              formControlName="password"
+              appPassword
+            />
+          </span>
+          <mat-error>
+            <app-error-message
+              [control]="backEndOperatorForm.get('password')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+        <p
+          class="helper-text"
+          *ngIf="
+            backEndOperatorForm.get('password').value &&
+            backEndOperatorForm.get('password').valid
+          "
+        >
+          {{ "note_password_label" | translate }}
+        </p>
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        fxFlex="1 1 calc(50% - 16px)"
+        fxFlex.lt-md="1 1 100%"
+        class="pwd-field"
+      >
+        <label fxFlex="1 1 40%" fxFlex.lt-md="1 1 100%">
+          {{ "confirm_password" | translate }}*
+        </label>
+        <mat-form-field
+          appearance="fill"
+          fxFlex="1 1 calc(60% - 16px)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <span class="password-input-field">
+            <input
+              matInput
+              type="text"
+              formControlName="password_confirmation"
+              appPassword
+            />
+          </span>
+          <mat-error>
+            <app-error-message
+              [control]="backEndOperatorForm.get('password_confirmation')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-error
+      *ngIf="backEndOperatorForm.errors?.compare_password"
+      class="compare-error pwd-compare"
+    >
+      {{ "passwords_match" | translate }}
+    </mat-error>
+  </div>
+
+  <app-module-configuration-form
+    #moduleConfigurationFormCmp
+    [permissions]="permissions"
+    [permissionsFromDetail]="backendOperatorDetail?.permissions"
+  ></app-module-configuration-form>
+</app-form>

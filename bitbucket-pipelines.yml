@@ -1,0 +1,103 @@
+image: node:12.16.2
+
+clone:
+  depth: full              # SonarCloud scanner needs the full history to assign issues properly
+
+definitions:
+  caches:
+    sonar: ~/.sonar/cache # Caching SonarCloud artifacts will speed up your build
+  services:
+      docker:
+        memory: 3072
+  steps:
+    - step: &build-test-sonarcloud
+        name: Build, test and analyze on SonarCloud
+        caches:
+          - node
+          - sonar
+        script:
+          - pipe: sonarsource/sonarcloud-scan:1.1.0
+            variables:
+              SONAR_TOKEN: ${SONAR_TOKEN}
+              EXTRA_ARGS: "-Dsonar.sources=src -Dsonar.projectVersion=1.0"
+
+pipelines:
+  pull-requests:
+      '**':
+        - step: *build-test-sonarcloud
+  branches:
+    develop:
+      - parallel:
+        - step: *build-test-sonarcloud
+        - step:
+            name: Build and deploy
+            deployment: QA
+            caches:
+              - node
+            script:
+              - apt update
+              - apt install -y zip unzip
+              - apt-get install -y build-essential git-core curl ssh ruby
+              - gem install bundler
+              - gem install capistrano -v 3.11.0
+              - npm install
+              # - npm test
+              - npm run build -- --configuration=qa
+              - cd dist
+              - zip -r dist.zip *
+              - cap dev deploy
+            
+    release/uat:
+      - step:
+          name: Build and deploy
+          deployment: Staging
+          caches:
+            - node
+          script:
+            - apt update
+            - apt install -y zip unzip
+            - apt-get install -y build-essential git-core curl ssh ruby
+            - gem install bundler
+            - gem install capistrano -v 3.11.0
+            - npm install
+            # - npm test
+            - npm run build -- --configuration=uat
+            - cd dist
+            - zip -r dist.zip *
+            - cap uat deploy
+    master:
+      - step:
+          name: Build and deploy
+          deployment: Production
+          caches:
+            - node
+          script:
+            - apt update
+            - apt install -y zip unzip
+            - apt-get install -y build-essential git-core curl ssh ruby
+            - gem install bundler
+            - gem install capistrano -v 3.11.0
+            - npm install
+            # - npm test
+            - npm run build -- --configuration=production
+            - cd dist
+            - zip -r dist.zip *
+            - cap prod deploy
+  custom:
+    deployment-to-qa:
+      - step:
+          name: Install - Test - Build - Upload
+          deployment: QA
+          caches:
+            - node
+          script:
+            - apt update
+            - apt install -y zip unzip
+            - apt-get install -y build-essential git-core curl ssh ruby
+            - gem install bundler
+            - gem install capistrano -v 3.11.0
+            - npm install
+            - npm run build -- --configuration=qa
+            - cd dist
+            - zip -r dist.zip *
+            - cap dev deploy

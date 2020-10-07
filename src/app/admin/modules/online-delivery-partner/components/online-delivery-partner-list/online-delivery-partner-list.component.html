@@ -1,0 +1,123 @@
+<div class="container-fluid">
+  <div class="table-wrapper">
+    <mat-card class="records-table-products records-table">
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutAlign="start"
+        class="records-filter section-header fxFlex fxFlexWrap"
+      >
+        <div class="search-filter fxFlex--item">
+          <app-search-input (searched)="onSearch($event)"></app-search-input>
+        </div>
+
+        <div class="has-button fxFlex--item">
+          <span *ngIf="listLength > 0">
+            <app-download
+              *appHasAccess="hasDownloadAccess"
+              [downloadOptions]="downloadOptions"
+              [parameters]="parameters"
+            ></app-download>
+          </span>
+          <button
+            mat-stroked-button
+            class="btn-sync"
+            (click)="onFetchFromErp()"
+            [ngClass]="{ 'is-fetching': erpLoading$ | async }"
+            [disabled]="erpLoading$ | async"
+            *appHasAccess="hasFetchAccess"
+          >
+            <mat-icon>
+              <app-material-icon [iconName]="'SYNC'"></app-material-icon>
+            </mat-icon>
+
+            <ng-container *ngIf="erpLoading$ | async">
+              {{ "fetching" | translate }}
+            </ng-container>
+
+            <ng-container *ngIf="!(erpLoading$ | async)">
+              {{ "fetch_from_erp" | translate }}
+            </ng-container>
+          </button>
+        </div>
+      </div>
+
+      <ng-container *ngIf="listLength === 0">
+        <div class="no-results">
+          <p>{{ "result_not_found_label" | translate }}</p>
+        </div>
+      </ng-container>
+
+      <table mat-table [dataSource]="dataSource" *ngIf="listLength > 0">
+        <ng-container matColumnDef="dealer_name">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "business_name" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let user">
+            <p class="business-name">
+              {{ user?.delivery_partner?.dealer_legal_name || "N/A" }}
+            </p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="owner_name">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "owner_name_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let user">
+            {{ user?.details?.name || "N/A" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="contact">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "mobile_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let user">
+            {{ user?.mobile_number || "N/A" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delivery_location">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "delivery_location" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let user">
+            <p class="assigned-delivery-locations">
+              {{
+                getDeliveryLocations(user.delivery_partner.delivery_locations)
+              }}
+            </p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "actions_label" | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let user">
+            <app-actions
+              [actions]="actions"
+              (actionClicked)="onActionClick($event, user?.id)"
+            ></app-actions>
+            <app-toggle
+              (toggled)="onToggleStatus($event, user.id)"
+              [value]="getToggleValue(user.status)"
+              [toggleOptions]="toggleOptions"
+            ></app-toggle>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <mat-paginator
+        [length]="listLength"
+        [pageSize]="perPage"
+        [pageSizeOptions]="getDefaultPageSizeOptions()"
+      >
+      </mat-paginator>
+    </mat-card>
+  </div>
+</div>

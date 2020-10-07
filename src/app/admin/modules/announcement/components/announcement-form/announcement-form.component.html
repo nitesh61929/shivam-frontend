@@ -1,0 +1,184 @@
+<app-form
+  [formOptions]="formOptions"
+  (save)="onSaveAnnouncementForm()"
+  (cancel)="onCancelAnnouncementForm()"
+  [formGroup]="announcementForm"
+  class="announcement-form"
+>
+  <div
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start"
+  >
+    <div class="announcement-info fxFlex--item">
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+      >
+        <label fxFlex="1 1 22.5%">{{ "title_label" | translate }}*</label>
+        <mat-form-field appearance="fill" fxFlex="1 1 60%">
+          <input matInput type="text" formControlName="title" />
+          <mat-error>
+            <app-error-message
+              [control]="announcementForm.get('title')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+      >
+        <label fxFlex="1 1 22.5%">{{ "start_date" | translate }}*</label>
+        <mat-form-field appearance="fill" fxFlex="1 1 60%" class="date-field">
+          <input
+            matInput
+            [matDatepicker]="startDatePicker"
+            formControlName="start_date"
+            [max]="endDate"
+            [min]="today"
+            (dateChange)="onStartDateChange($event)"
+            readonly
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="startDatePicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+          <mat-error>
+            <app-error-message
+              [control]="announcementForm.get('start_date')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+      >
+        <label fxFlex="1 1 22.5%">{{ "end_date" | translate }}*</label>
+        <mat-form-field appearance="fill" fxFlex="1 1 60%" class="date-field">
+          <input
+            matInput
+            [matDatepicker]="endDatePicker"
+            formControlName="end_date"
+            [min]="startDate"
+            (dateChange)="onEndDateChange($event)"
+            readonly
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="endDatePicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker></mat-datepicker>
+          <mat-error>
+            <app-error-message
+              [control]="announcementForm.get('end_date')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+      >
+        <label fxFlex="1 1 22.5%">{{ "type_label" | translate }}*</label>
+        <mat-form-field appearance="fill" fxFlex="1 1 60%">
+          <mat-select
+            formControlName="type"
+            [placeholder]="'select_announcement_type' | translate"
+          >
+            <mat-option
+              *ngFor="let announcementType of announcementTypes"
+              [value]="announcementType.value"
+            >
+              {{ announcementType.title | translate }}</mat-option
+            >
+          </mat-select>
+          <mat-error>
+            <app-error-message
+              [control]="announcementForm.get('type')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+      >
+        <label fxFlex="1 1 22.5%">
+          {{ "module_allocated_label" | translate }}*
+        </label>
+        <mat-form-field appearance="fill" fxFlex="1 1 60%">
+          <mat-select
+            formControlName="is_for_consumer"
+            [placeholder]="'select_module_label' | translate"
+          >
+            <mat-option
+              *ngFor="let moduleAllocation of moduleAllocations"
+              [value]="moduleAllocation.value"
+            >
+              {{ moduleAllocation.title | translate }}</mat-option
+            >
+          </mat-select>
+          <mat-error>
+            <app-error-message
+              [control]="announcementForm.get('is_for_consumer')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="fxFlex--item has-img-preview">
+      <app-file-upload
+        #fileUploadCmp
+        formControlName="resource_path"
+        [fileSrc]="announcementDetail?.resource_path"
+        [fileType]="announcementDetail?.resource_type"
+        [btnLabel]="'Upload File'"
+        [info]="'File must be of type jpg, jpeg, png, gif, mp4 or pdf'"
+        (clearFile)="onClearResourcePath()"
+      ></app-file-upload>
+
+      <mat-error class="media-exceed-limit" *ngIf="isSubmitted">
+        <app-error-message
+          [control]="announcementForm.get('resource_path')"
+        ></app-error-message>
+      </mat-error>
+
+      <ng-container *ngIf="checkFileFormat()">
+        <div class="media-thumbnail">
+          <app-file-upload
+            [btnLabel]="'upload_thumbnail' | translate"
+            [info]="'File must be of type jpg, jpeg, png'"
+            [fileSrc]="announcementDetail?.thumbnail"
+            formControlName="thumbnail"
+            (clearFile)="onClearThumbnail()"
+            [enableClear]="true"
+          ></app-file-upload>
+          <mat-error *ngIf="isSubmitted">
+            <app-error-message
+              [control]="announcementForm.get('thumbnail')"
+            ></app-error-message>
+          </mat-error>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</app-form>

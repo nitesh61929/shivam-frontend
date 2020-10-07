@@ -1,0 +1,48 @@
+<app-form
+  [formOptions]="formOptions"
+  (save)="onUpdateTaxationForm()"
+  (cancel)="onCancelTaxationForm()"
+  [formGroup]="taxationForm"
+>
+  <div
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start center"
+    fxLayoutAlign.xs="start"
+  >
+    <label fxFlex="1 1 40%">{{ "title_label" | translate }}*</label>
+    <mat-form-field appearance="fill" fxFlex="1 1 60%">
+      <input matInput type="text" formControlName="name" />
+      <mat-error>
+        <app-error-message
+          [control]="taxationForm.get('name')"
+        ></app-error-message>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start center"
+    fxLayoutAlign.xs="start"
+  >
+    <label fxFlex="1 1 40%">{{ "value_label" | translate }}*</label>
+    <mat-form-field appearance="fill" fxFlex="1 1 60%">
+      <input
+        matInput
+        type="number"
+        appOnlyNumber
+        [decimal]="true"
+        formControlName="value"
+      />
+      <mat-error>
+        <app-error-message
+          [control]="taxationForm.get('value')"
+        ></app-error-message>
+      </mat-error>
+    </mat-form-field>
+  </div>
+</app-form>

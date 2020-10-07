@@ -1,0 +1,20 @@
+<app-price-form
+  #priceFormCmp
+  (savePriceForm)="onSavePriceForm($event)"
+  (updatePriceForm)="onUpdatePriceForm($event)"
+  (cancelPriceForm)="onCancelPriceForm()"
+  [deliveryLocationList]="deliveryLocationList"
+  [productId]="productId"
+  [priceDetail$]="priceDetail$"
+  *ngIf="deliveryLocationList.length > 0"
+  [formEditState]="formEditState"
+  [productDetail]="productDetail"
+></app-price-form>
+
+<p *ngIf="deliveryLocationList.length === 0">
+  Please add
+  <a class="text-link" (click)="goToDeliveryLocation()">
+    delivery location
+  </a>
+  first to configure price.
+</p>

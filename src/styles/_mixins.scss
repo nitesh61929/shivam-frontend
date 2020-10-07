@@ -1,0 +1,7 @@
+@mixin pxtorem($fontSize) {
+  font-size: ($fontSize / $size) * 1rem !important;
+}
+
+@mixin linearGradient($color1, $color2) {
+  background: linear-gradient($color1, $color2);
+}

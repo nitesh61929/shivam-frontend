@@ -1,0 +1,66 @@
+<div class="container">
+  <mat-card
+    class="login-form-container auth-form-container"
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutAlign="space-around center"
+    fxLayoutGap="16px"
+  >
+    <div class="logo-containers">
+      <figure class="ns-logo-container">
+        <img src="assets/ns-logo.png" alt="NS Award Logo" />
+      </figure>
+      <figure class="shivam-logo-container">
+        <img src="assets/logo.png" alt="Shivam Logo Main" />
+      </figure>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmitLoginForm()">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "username" | translate }} *</mat-label>
+        <mat-icon>
+          <app-material-icon [iconName]="'ACCOUNT'"></app-material-icon>
+        </mat-icon>
+        <input
+          matInput
+          type="text"
+          placeholder="johndoe"
+          formControlName="username"
+        />
+        <mat-error>
+          <app-error-message
+            [control]="loginForm.get('username')"
+          ></app-error-message>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "password" | translate }} *</mat-label>
+        <mat-icon>
+          <app-material-icon [iconName]="'PASSWORD'"></app-material-icon>
+        </mat-icon>
+        <input
+          matInput
+          type="password"
+          placeholder="********"
+          formControlName="password"
+        />
+        <mat-error>
+          <app-error-message
+            [control]="loginForm.get('password')"
+          ></app-error-message>
+        </mat-error>
+      </mat-form-field>
+      <button mat-button type="submit" color="primary" class="theme-primary">
+        {{ "login" | translate }}
+      </button>
+    </form>
+  </mat-card>
+
+  <div class="documents-menu">
+    <a target="_blank" routerLink="/terms-and-conditions">{{
+      "terms_and_conditions" | translate
+    }}</a>
+    <a target="_blank" routerLink="/privacy-policy">{{
+      "privacy_policy" | translate
+    }}</a>
+  </div>
+</div>

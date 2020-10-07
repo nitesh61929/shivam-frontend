@@ -1,0 +1,5 @@
+<app-page-header [pageHeaderOptions]="pageHeaderOptions"></app-page-header>
+
+<div class="page-content" *appHasAccess="hasListAccess">
+  <app-feedback-list-container></app-feedback-list-container>
+</div>

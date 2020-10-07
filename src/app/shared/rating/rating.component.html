@@ -1,0 +1,10 @@
+<span class="ratings">
+  <ng-container *ngFor="let rating of ratingsArray">
+    <mat-icon class="rated" *ngIf="rating">
+      <app-material-icon [iconName]="'STAR'"></app-material-icon>
+    </mat-icon>
+    <mat-icon *ngIf="!rating && showEmptyStar">
+      <app-material-icon [iconName]="'STAR_BORDER'"></app-material-icon>
+    </mat-icon>
+  </ng-container>
+</span>

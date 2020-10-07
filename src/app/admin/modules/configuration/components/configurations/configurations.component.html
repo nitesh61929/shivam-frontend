@@ -1,0 +1,8 @@
+<app-page-header
+  [pageHeaderOptions]="pageHeaderOptions"
+  (addClick)="onAddConfiguration()"
+></app-page-header>
+
+<ng-container *appHasAccess="hasEditAccess">
+  <app-configuration-form-container> </app-configuration-form-container>
+</ng-container>

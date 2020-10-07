@@ -1,0 +1,501 @@
+<app-form
+  [formOptions]="formOptions"
+  [formGroup]="onlineDeliveryPartnerForm"
+  (save)="onSaveOrUpdateDealerForm()"
+  (cancel)="onCancelDealerForm()"
+>
+  <div
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutAlign="start center"
+    fxLayoutAlign.lt-md="start"
+    class="has-dealer-selection"
+  >
+    <div
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutAlign="start center"
+      fxLayoutAlign.lt-md="start"
+      fxFlex="1 1 50%"
+      fxFlex.lt-md="1 1 100%"
+      fxLayoutGap="16px"
+      class="select-dealer-field fxFlexWrap"
+    >
+      <div
+        class="dealer-select-note"
+        *ngIf="
+          onlineDeliveryPartnerForm.get('external_id').hasError('required')
+        "
+      >
+        Please search and select dealer
+      </div>
+
+      <label fxFlex="1 1 calc(20% - 8px)" fxFlex.lt-md="1 1 100%">
+        {{ "select_dealer" | translate }}*
+      </label>
+
+      <mat-form-field
+        appearance="fill"
+        fxFlex="1 1 calc(30% - 8px)"
+        fxFlex.lt-md="1 1 100%"
+        class="search-dealers"
+      >
+        <input
+          type="text"
+          [placeholder]="'search_dealer' | translate"
+          matInput
+          [matAutocomplete]="auto"
+          formControlName="dealers"
+        />
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          (optionSelected)="OnDealerSelect($event)"
+          [displayWith]="getDisplayName"
+        >
+          <mat-option class="spinner" *ngIf="isLoading">
+            <mat-spinner diameter="50"></mat-spinner>
+          </mat-option>
+
+          <ng-container>
+            <mat-option
+              *ngFor="let dealer of filteredDealerOptions"
+              [value]="dealer"
+            >
+              {{ dealer.dealerName }}
+            </mat-option>
+          </ng-container>
+        </mat-autocomplete>
+
+        <mat-icon>
+          <app-material-icon [iconName]="'SEARCH'"></app-material-icon>
+        </mat-icon>
+
+        <mat-error>
+          <app-error-message
+            [control]="onlineDeliveryPartnerForm.get('dealers')"
+          ></app-error-message>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-error
+        class="msg-external-error"
+        *ngIf="
+          onlineDeliveryPartnerForm.get('external_id').hasError('serverError')
+        "
+      >
+        {{ onlineDeliveryPartnerForm.get("external_id").errors.serverError[0] }}
+      </mat-error>
+    </div>
+  </div>
+
+  <div
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutAlign="start center"
+    fxLayoutAlign.lt-md="start"
+    class="fxFlexWrap"
+  >
+    <ng-container formGroupName="delivery_partner">
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        fxFlex="1 1 50%"
+        fxFlex.lt-md="1 1 100%"
+        fxLayoutGap="16px"
+      >
+        <label fxFlex="1 1 calc(20% - 8px)" fxFlex.lt-md="1 1 100%">
+          {{ "business_name" | translate }}*
+        </label>
+        <mat-form-field
+          appearance="fill"
+          fxFlex="1 1 calc(30% - 8px)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <input matInput type="text" formControlName="dealer_legal_name" />
+          <mat-error>
+            <app-error-message
+              [control]="
+                onlineDeliveryPartnerForm
+                  .get('delivery_partner')
+                  .get('dealer_legal_name')
+              "
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </ng-container>
+    <ng-container formGroupName="delivery_partner">
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        fxFlex="1 1 50%"
+        fxFlex.lt-md="1 1 100%"
+        fxLayoutGap="16px"
+      >
+        <label fxFlex="1 1 calc(20% - 8px)" fxFlex.lt-md="1 1 100%">
+          {{ "VAT_label" | translate }}
+        </label>
+        <mat-form-field
+          appearance="fill"
+          fxFlex="1 1 calc(30% - 8px)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <input matInput type="text" formControlName="vat_number" />
+          <mat-error>
+            <app-error-message
+              [control]="
+                onlineDeliveryPartnerForm
+                  .get('delivery_partner')
+                  .get('vat_number')
+              "
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </ng-container>
+  </div>
+
+  <div
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutAlign="start center"
+    fxLayoutAlign.lt-md="start"
+    class="fxFlexWrap"
+  >
+    <ng-container formGroupName="details">
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        fxFlex="1 1 50%"
+        fxFlex.lt-md="1 1 100%"
+        fxLayoutGap="16px"
+      >
+        <label fxFlex="1 1 calc(20% - 8px)" fxFlex.lt-md="1 1 100%">
+          {{ "owners_first_name" | translate }}*
+        </label>
+        <mat-form-field
+          appearance="fill"
+          fxFlex="1 1 calc(30% - 8px)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <input matInput type="text" formControlName="first_name" />
+          <mat-error>
+            <app-error-message
+              [control]="
+                onlineDeliveryPartnerForm.get('details').get('first_name')
+              "
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        fxFlex="1 1 50%"
+        fxFlex.lt-md="1 1 100%"
+        fxLayoutGap="16px"
+      >
+        <label fxFlex="1 1 calc(20% - 8px)" fxFlex.lt-md="1 1 100%">
+          {{ "owners_last_name" | translate }}*
+        </label>
+        <mat-form-field
+          appearance="fill"
+          fxFlex="1 1 calc(30% - 8px)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <input matInput type="text" formControlName="last_name" />
+          <mat-error>
+            <app-error-message
+              [control]="
+                onlineDeliveryPartnerForm.get('details').get('last_name')
+              "
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        fxFlex="1 1 50%"
+        fxFlex.lt-md="1 1 100%"
+        fxLayoutGap="16px"
+      >
+        <label fxFlex="1 1 calc(20% - 8px)" fxFlex.lt-md="1 1 100%">
+          {{ "email_label" | translate }}
+        </label>
+        <mat-form-field
+          appearance="fill"
+          fxFlex="1 1 calc(30% - 8px)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <input matInput type="text" formControlName="email" />
+          <mat-error>
+            <app-error-message
+              [control]="onlineDeliveryPartnerForm.get('details').get('email')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </ng-container>
+
+    <div
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutAlign="start center"
+      fxLayoutAlign.lt-md="start"
+      fxFlex="1 1 50%"
+      fxFlex.lt-md="1 1 100%"
+      fxLayoutGap="16px"
+    >
+      <label fxFlex="1 1 calc(20% - 8px)" fxFlex.lt-md="1 1 100%">
+        {{ "mobile_label" | translate }}*
+      </label>
+      <mat-form-field
+        appearance="fill"
+        fxFlex="1 1 calc(30% - 8px)"
+        fxFlex.lt-md="1 1 100%"
+      >
+        <input matInput type="text" formControlName="mobile_number" />
+        <mat-error>
+          <app-error-message
+            [control]="onlineDeliveryPartnerForm.get('mobile_number')"
+          ></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="user-login-fields">
+    <div
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutAlign="start center"
+      fxLayoutAlign.lt-md="start"
+    >
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        fxFlex="1 1 50%"
+        fxFlex.lt-md="1 1 100%"
+        fxLayoutGap="16px"
+      >
+        <label fxFlex="1 1 calc(20% - 8px)" fxFlex.lt-md="1 1 100%">
+          {{ "username" | translate }}*
+        </label>
+        <mat-form-field
+          appearance="fill"
+          fxFlex="1 1 calc(30% - 8px)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <input matInput type="text" formControlName="username" />
+          <mat-error>
+            <app-error-message
+              [control]="onlineDeliveryPartnerForm.get('username')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutAlign="start center"
+      fxLayoutAlign.lt-md="start"
+    >
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        fxFlex="1 1 50%"
+        fxFlex.lt-md="1 1 100%"
+        fxLayoutGap="16px"
+        class="pwd-field"
+      >
+        <label fxFlex="1 1 calc(20% - 8px)" fxFlex.lt-md="1 1 100%">
+          {{ "password" | translate }}*
+        </label>
+        <mat-form-field
+          appearance="fill"
+          fxFlex="1 1 calc(30% - 8px)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <span class="password-input-field">
+            <button
+              mat-icon-button
+              color="primary"
+              aria-label="Generate Password"
+              class="btn-generate-pwd"
+              matTooltip="Generate Password"
+              [matTooltipPosition]="'above'"
+              (click)="generatePassword()"
+            >
+              <mat-icon>
+                <app-material-icon [iconName]="'PASSWORD'"></app-material-icon>
+              </mat-icon>
+            </button>
+            <input
+              matInput
+              type="text"
+              formControlName="password"
+              appPassword
+            />
+          </span>
+          <mat-error>
+            <app-error-message
+              [control]="onlineDeliveryPartnerForm.get('password')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+        <p
+          class="helper-text"
+          *ngIf="
+            onlineDeliveryPartnerForm.get('password').value &&
+            onlineDeliveryPartnerForm.get('password').valid
+          "
+        >
+          {{ "note_password_label" | translate }}
+        </p>
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        fxFlex="1 1 50%"
+        fxFlex.lt-md="1 1 100%"
+        fxLayoutGap="16px"
+        class="pwd-field"
+      >
+        <label fxFlex="1 1 calc(20% - 8px)" fxFlex.lt-md="1 1 100%">
+          {{ "confirm_password" | translate }}*
+        </label>
+        <mat-form-field
+          appearance="fill"
+          fxFlex="1 1 calc(30% - 8px)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <span class="password-input-field">
+            <input
+              matInput
+              type="text"
+              formControlName="password_confirmation"
+              appPassword
+            />
+          </span>
+          <mat-error>
+            <app-error-message
+              [control]="onlineDeliveryPartnerForm.get('password_confirmation')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <mat-error
+      *ngIf="onlineDeliveryPartnerForm.errors?.compare_password"
+      class="compare-error pwd-compare"
+    >
+      {{ "passwords_match" | translate }}
+    </mat-error>
+  </div>
+
+  <ng-container formGroupName="delivery_partner">
+    <div class="location-fields">
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        class="fxFlexWrap"
+      >
+        <div
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutAlign="start center"
+          fxLayoutAlign.lt-md="start"
+          fxFlex="1 1 50%"
+          fxFlex.lt-md="1 1 100%"
+          fxLayoutGap="16px"
+        >
+          <label fxFlex="1 1 calc(20% - 8px)" fxFlex.lt-md="1 1 100%">
+            {{ "delivery_location" | translate }}*
+          </label>
+          <mat-form-field
+            appearance="fill"
+            fxFlex="1 1 calc(30% - 8px)"
+            fxFlex.lt-md="1 1 100%"
+          >
+            <mat-select
+              formControlName="delivery_location_ids"
+              [placeholder]="'select_delivery_location' | translate"
+              multiple
+            >
+              <mat-option
+                *ngFor="let location of deliveryLocations"
+                [value]="location.id"
+              >
+                {{ location.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <app-error-message
+                [control]="
+                  onlineDeliveryPartnerForm
+                    .get('delivery_partner')
+                    .get('delivery_location_ids')
+                "
+              ></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        class="fxFlexWrap"
+      >
+        <div
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutAlign="start center"
+          fxLayoutAlign.lt-md="start"
+          fxFlex="1 1 50%"
+          fxFlex.lt-md="1 1 100%"
+          fxLayoutGap="16px"
+        >
+          <label fxFlex="1 1 calc(20% - 8px)" fxFlex.lt-md="1 1 100%">
+            {{ "shivams_warehouse" | translate }}
+          </label>
+          <div fxFlex="1 1 calc(30% - 8px)" fxFlex.lt-md="1 1 100%">
+            <mat-radio-group formControlName="in_house">
+              <mat-radio-button value="1">
+                {{ "yes" | translate }}
+              </mat-radio-button>
+              <mat-radio-button value="0">
+                {{ "no" | translate }}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</app-form>

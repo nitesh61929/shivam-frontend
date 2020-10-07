@@ -1,0 +1,15 @@
+<app-online-delivery-partner-form
+  #onlineDeliveryPartnerFormCmp
+  [erpDealers]="erpDealers"
+  [deliveryLocations$]="deliveryLocations$"
+  [error$]="error$"
+  (saveOrUpdateOnlineDeliveryPartner)="
+    onSaveOrUpdateOnlineDeliveryPartner($event)
+  "
+  (cancelOnlineDeliveryPartner)="onCancelOnlineDeliveryPartner()"
+  [onlineDeliveryPartnerDetail$]="onlineDeliveryPartnerDetail$"
+></app-online-delivery-partner-form>
+
+<div class="spinner" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

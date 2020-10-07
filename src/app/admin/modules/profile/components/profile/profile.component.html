@@ -1,0 +1,50 @@
+<div class="page-title">
+  <h2 class="page-title-content">Profile</h2>
+</div>
+<div class="container-fluid">
+  <mat-card class="user-profile detail-component">
+    <button
+      mat-icon-button
+      class="theme-icon-alternate is-edit"
+      (click)="onEditProfile()"
+      matTooltip="{{ 'edit_profile_label' | translate }}"
+    >
+      <mat-icon>
+        <app-material-icon [iconName]="'EDIT'"></app-material-icon>
+      </mat-icon>
+    </button>
+
+    <mat-card-content>
+      <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start">
+        <h3>
+          {{ profile?.details?.first_name }} {{ profile?.details?.last_name }}
+        </h3>
+        <span>
+          <label>{{ "username" | translate }}</label>
+          {{ profile?.username }}
+        </span>
+        <span *ngIf="profile?.mobile_number">
+          <label>{{ "mobile_label" | translate }}</label>
+          {{ profile?.mobile_number }}
+        </span>
+        <span>
+          <label>{{ "email_label" | translate }}</label>
+          {{ profile?.details?.email }}
+        </span>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        mat-raised-button
+        color="warn"
+        class="theme-alternate"
+        (click)="onChangePassword()"
+      >
+        <mat-icon>
+          <app-material-icon [iconName]="'PASSWORD'"></app-material-icon>
+        </mat-icon>
+        {{ "change_password_label" | translate }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

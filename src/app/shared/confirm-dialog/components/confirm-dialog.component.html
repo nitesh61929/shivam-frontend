@@ -1,0 +1,23 @@
+<div class="header">
+  <h1 mat-dialog-title>{{ data.title }}</h1>
+</div>
+<div mat-dialog-content>
+  <p class="dialog-message">{{ data.message }}</p>
+  <mat-checkbox *ngIf="data.showCheckBox" (change)="onCheckboxChange($event)">{{
+    "notify_users" | translate
+  }}</mat-checkbox>
+</div>
+<div mat-dialog-actions>
+  <button
+    mat-raised-button
+    class="theme-gray"
+    style="margin-right: 10px;"
+    (click)="cancel()"
+    color="warn"
+  >
+    {{ data.cancelText }}
+  </button>
+  <button mat-raised-button class="theme-primary" (click)="confirm()">
+    {{ data.confirmText }}
+  </button>
+</div>

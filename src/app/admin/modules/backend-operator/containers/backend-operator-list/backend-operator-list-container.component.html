@@ -1,0 +1,14 @@
+<app-backend-operator-list
+  [backendOperatorList$]="backendOperatorList$"
+  [pagination$]="pagination$"
+  [downloadOptions]="downloadOptions"
+  (paramChanged)="onParamChange($event)"
+  (toggleBackendOperator)="onBackendOperatorToggle($event)"
+  (backendOperatorDetail)="onBackendOperatorDetail($event)"
+  (backendOperatorEdit)="onBackendOperatorEdit($event)"
+  [parameters]="getParam()"
+></app-backend-operator-list>
+
+<div class="spinner" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

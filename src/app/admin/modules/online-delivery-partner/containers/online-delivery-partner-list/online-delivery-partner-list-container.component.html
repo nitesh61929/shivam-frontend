@@ -1,0 +1,16 @@
+<app-online-delivery-partner-list
+  [onlineDeliveryPartnerList$]="onlineDeliveryPartnerList$"
+  [pagination$]="pagination$"
+  (paramChanged)="onParamChange($event)"
+  (toggleOnlineDeliveryPartner)="onToggleOnlineDeliveryPartner($event)"
+  (onlineDeliveryPartnerDetail)="onOnlineDeliveryPartnerDetail($event)"
+  (onlineDeliveryPartnerEdit)="onOnlineDeliveryPartnerEdit($event)"
+  (fetchFromErp)="onFetchFromErp()"
+  [erpLoading$]="erpLoading$"
+  [downloadOptions]="downloadOptions"
+  [parameters]="getParam()"
+></app-online-delivery-partner-list>
+
+<div class="spinner" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

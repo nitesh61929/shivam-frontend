@@ -1,0 +1,142 @@
+<div class="container-fluid">
+  <div class="table-wrapper">
+    <mat-card class="records-table-order records-table">
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutAlign="start"
+        fxLayoutAlign.xs="start"
+        class="records-filter section-header fxFlex fxFlexWrap"
+      >
+        <div class="search-filter fxFlex--item">
+          <app-search-input (searched)="onSearch($event)"></app-search-input>
+        </div>
+
+        <div
+          class="filter-by-status fxFlex--item"
+          [formGroup]="statusFilterFormGroup"
+        >
+          <mat-form-field appearance="fill">
+            <mat-select
+              [placeholder]="'select_status' | translate"
+              (selectionChange)="onStatusChange($event)"
+              formControlName="statusFormControl"
+              multiple
+            >
+              <app-select-check-all
+                [model]="statusFilterFormGroup.get('statusFormControl')"
+                [values]="getOrderStatusesValues(orderStatuses)"
+                (toggled)="onToggle()"
+              >
+              </app-select-check-all>
+
+              <mat-option
+                *ngFor="let orderStatus of orderStatuses"
+                [value]="orderStatus.value"
+              >
+                {{ orderStatus.title | translate }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="date-field fxFlex--item">
+          <app-date-range
+            (dateRangeSelected)="onDateRangeSelect($event)"
+          ></app-date-range>
+        </div>
+
+        <div class="has-button fxFlex--item" *ngIf="listLength > 0">
+          <app-download
+            *appHasAccess="hasDownloadAccess"
+            [downloadOptions]="downloadOptions"
+            [parameters]="parameters"
+          ></app-download>
+        </div>
+      </div>
+
+      <ng-container *ngIf="listLength === 0">
+        <div class="no-results">
+          <p>{{ "result_not_found_label" | translate }}</p>
+        </div>
+      </ng-container>
+
+      <table mat-table [dataSource]="dataSource" *ngIf="listLength > 0">
+        <ng-container matColumnDef="order_id">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "order_id" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let order">{{ order?.order_number }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="customer_name">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "customer_name" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let order">{{ order?.billing_name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dealer">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "online_delivery_partners" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let order">
+            {{ order?.delivery_partner?.business_name || "N/A" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>{{ "date" | translate }}</th>
+          <td mat-cell *matCellDef="let order">
+            {{ getFormattedDate(order?.ordered_on) | date: "shortDate" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "amount" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let order">
+            {{ order?.grand_total | currency: "Rs. ":"symbol" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>{{ "status" | translate }}</th>
+          <td mat-cell *matCellDef="let order">
+            <span [class]="getStatusClass(order?.status)" class="order-status">
+              {{ order?.status }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "actions_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let order">
+            <app-actions
+              [actions]="actions"
+              (actionClicked)="onActionClick($event, order?.id)"
+            ></app-actions>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        [length]="listLength"
+        [pageSize]="perPage"
+        [pageSizeOptions]="getDefaultPageSizeOptions()"
+      >
+      </mat-paginator>
+
+      <div class="total-order-amount" *ngIf="listLength > 0">
+        <label>{{ "total_order_amount" | translate }}</label>
+        <span> {{ grandTotal$ | async | currency: "Rs. ":"symbol" }}</span>
+      </div>
+    </mat-card>
+  </div>
+</div>

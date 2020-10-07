@@ -1,0 +1,10 @@
+<app-consumer-detail
+  [consumerDetail$]="consumerDetail$"
+  (backClick)="onBackClick()"
+  (editClick)="onEditClick($event)"
+  *ngIf="!(loading$ | async)"
+></app-consumer-detail>
+
+<div class="spinner" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

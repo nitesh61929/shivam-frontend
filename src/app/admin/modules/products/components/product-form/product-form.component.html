@@ -1,0 +1,124 @@
+<app-form
+  [formOptions]="formOptions"
+  (save)="onSaveOrUpdateProductForm()"
+  (cancel)="onCancelProductForm()"
+  [formGroup]="productForm"
+>
+  <div class="fxFlexWrap fxFlex">
+    <div class="fxFlex--item">
+      <div class="formRow fxFlexWrap fxFlex">
+        <label>{{ "product_name_label" | translate }}*</label>
+        <mat-form-field appearance="fill">
+          <input matInput type="text" formControlName="name" />
+          <mat-error>
+            <app-error-message
+              [control]="productForm.get('name')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="isInlineSm formRow fxFlexWrap fxFlex">
+        <label>{{ "module_allocated_label" | translate }}*</label>
+        <mat-form-field appearance="fill">
+          <mat-select
+            formControlName="is_for_consumer"
+            [placeholder]="'select_module_label' | translate"
+          >
+            <mat-option
+              *ngFor="let moduleAllocation of moduleAllocations"
+              [value]="moduleAllocation.value"
+            >
+              {{ moduleAllocation.title | translate }}</mat-option
+            >
+          </mat-select>
+          <mat-error>
+            <app-error-message
+              [control]="productForm.get('is_for_consumer')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="isInlineSm formRow fxFlexWrap fxFlex">
+        <label>{{ "minimum_quantity_label" | translate }}*</label>
+        <mat-form-field appearance="fill">
+          <input
+            type="number"
+            appOnlyNumber
+            matInput
+            formControlName="min_order_quantity"
+          />
+          <mat-error>
+            <app-error-message
+              [control]="productForm.get('min_order_quantity')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="isInlineSm formRow fxFlexWrap fxFlex">
+        <label>{{ "maximum_quantity_label" | translate }}*</label>
+        <mat-form-field appearance="fill">
+          <input
+            appOnlyNumber
+            matInput
+            type="number"
+            formControlName="max_order_quantity"
+          />
+          <mat-error>
+            <app-error-message
+              [control]="productForm.get('max_order_quantity')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-error
+        class="compare-error"
+        *ngIf="productForm.errors?.quantityCompare"
+      >
+        {{ "quantity_compare" | translate }}
+      </mat-error>
+
+      <div class="formRow fxFlexWrap fxFlex">
+        <label>{{ "short_description" | translate }}*</label>
+        <mat-form-field appearance="fill">
+          <textarea matInput formControlName="meta_description"></textarea>
+          <mat-error>
+            <app-error-message
+              [control]="productForm.get('meta_description')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="formRow fxFlexWrap fxFlex desc-field">
+        <label>{{ "long_description" | translate }}</label>
+        <mat-form-field appearance="fill">
+          <textarea matInput formControlName="description"></textarea>
+          <mat-error>
+            <app-error-message
+              [control]="productForm.get('description')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="fxFlex--item has-img-preview">
+      <app-file-upload
+        (clearFile)="onClearFile()"
+        formControlName="image_url"
+        [fileSrc]="fileSrc"
+        [btnLabel]="'Upload Image'"
+        [info]="' Image must be of type jpg, jpeg, png or gif'"
+      ></app-file-upload>
+      <mat-error *ngIf="isSubmitted">
+        <app-error-message
+          [control]="productForm.get('image_url')"
+        ></app-error-message>
+      </mat-error>
+    </div>
+  </div>
+</app-form>

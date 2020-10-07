@@ -1,0 +1,17 @@
+<ng-container>
+  <app-delivery-location-list
+    [deliveryLocations$]="deliveryLocations$"
+    [error$]="error$"
+    [pagination$]="pagination$"
+    (editDeliveryLocation)="onEditDeliveryLocation($event)"
+    (deleteDeliveryLocation)="onDeleteDeliveryLocation($event)"
+    (deliveryLocationDetail)="onDeliveryLocationDetail($event)"
+    (paramChanged)="onParamChanged($event)"
+    [downloadOptions]="downloadOptions"
+    [parameters]="getParam()"
+  ></app-delivery-location-list>
+</ng-container>
+
+<div class="spinner" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

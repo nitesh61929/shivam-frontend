@@ -1,0 +1,26 @@
+<app-form
+  [formOptions]="formOptions"
+  (save)="onSaveContactForm()"
+  [formGroup]="contactForm"
+>
+  <div fxLayout="column" fxLayoutGap="16px" fxLayoutAlign="start">
+    <h3>
+      <label>{{ "content" | translate }}</label>
+    </h3>
+    <p class="helper-text">
+      To insert link, click on hyperlink icon (<mat-icon>link</mat-icon>) and
+      fill in the box with link you want to insert. <br /><br />
+      Use "mailto" in front of an email id to let users to compose email for
+      email id. <br />For e.g.: mailto:johndoe@gmail.com <br /><br />
+      Use "tel" to let enable users to call on given contact numbers. <br />For
+      e.g.: tel: 98XXXXXXXX
+    </p>
+    <quill-editor formControlName="description"></quill-editor>
+    <mat-error>
+      <app-error-message
+        *ngIf="submitted"
+        [control]="contactForm.get('description')"
+      ></app-error-message>
+    </mat-error>
+  </div>
+</app-form>

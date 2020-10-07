@@ -1,0 +1,70 @@
+<figure class="img-preview" *ngIf="(format === 'image' || !format) && fileSrc">
+  <img [src]="fileSrc" />
+
+  <button
+    mat-icon-button
+    color="warn"
+    class="remove-media"
+    (click)="onClear()"
+    *ngIf="enableClear"
+  >
+    <mat-icon [matTooltip]="'clear_file' | translate"
+      ><app-material-icon [iconName]="'CLEAR'"></app-material-icon
+    ></mat-icon>
+  </button>
+</figure>
+
+<div style="position: relative;" *ngIf="format === 'video' && fileSrc">
+  <video [src]="fileSrc" height="200" controls class="video"></video>
+  <button
+    mat-icon-button
+    color="warn"
+    class="remove-media"
+    (click)="onClear()"
+    *ngIf="enableClear"
+  >
+    <mat-icon [matTooltip]="'clear_file' | translate" *ngIf="enableClear"
+      ><app-material-icon [iconName]="'CLEAR'"></app-material-icon
+    ></mat-icon>
+  </button>
+</div>
+
+<div *ngIf="format === 'pdf'" class="pdf-preview">
+  <img src="assets/thumb-pdf.png" alt="PDF" />
+  <a *ngIf="fileSrc" [href]="fileSrc" target="blank">{{
+    "preview_file" | translate
+  }}</a>
+  <p *ngIf="!fileSrc && file?.name">{{ file?.name }}</p>
+  <button
+    mat-icon-button
+    color="warn"
+    class="remove-media"
+    (click)="onClear()"
+    *ngIf="enableClear"
+  >
+    <mat-icon [matTooltip]="'clear_file' | translate" *ngIf="enableClear"
+      ><app-material-icon [iconName]="'CLEAR'"></app-material-icon
+    ></mat-icon>
+  </button>
+</div>
+
+<figure class="img-preview" *ngIf="!fileSrc && !format">
+  <img [src]="'assets/image-placeholder.png'" />
+</figure>
+
+<div class="fxFlex fxFlexWrap j-space-between">
+  <span class="image-upload-btn">
+    <input type="file" name="profile" />
+    <mat-icon>
+      <app-material-icon [iconName]="'CAMERA_FILE'"></app-material-icon>
+    </mat-icon>
+    <label>{{ btnLabel }}</label>
+  </span>
+
+  <p class="helper-text aligned-right">
+    <mat-icon>
+      <app-material-icon [iconName]="'INFO'"></app-material-icon>
+    </mat-icon>
+    {{ info }}
+  </p>
+</div>

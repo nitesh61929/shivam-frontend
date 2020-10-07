@@ -1,0 +1,16 @@
+<mat-sidenav-container class="app-wrapper">
+  <mat-sidenav
+    #sidenav
+    [mode]="mobileQuery.matches ? 'over' : 'side'"
+    [opened]="!mobileQuery.matches"
+  >
+    <app-sidebar-container></app-sidebar-container>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <button mat-button (click)="sidenav.toggle()" class="toggle">
+      <mat-icon>sort</mat-icon>
+    </button>
+    <app-navbar-container></app-navbar-container>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

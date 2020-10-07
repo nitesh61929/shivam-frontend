@@ -1,0 +1,12 @@
+<app-feedback-list
+  [feedbackList$]="feedbackList$"
+  [pagination$]="pagination$"
+  (paramChanged)="onParamChange($event)"
+  [modules]="modules"
+  [feedbackTypes]="feedbackTypes"
+  [ratings]="ratings"
+></app-feedback-list>
+
+<div class="spinner" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

@@ -1,0 +1,54 @@
+<app-form
+  [formOptions]="formOptions"
+  (save)="onSaveOrUpdateConfigurationForm()"
+  (cancel)="onCancelConfigurationForm()"
+  [formGroup]="configurationForm"
+  class="configuration-form"
+>
+  <div
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start"
+  >
+    <div
+      fxLayout="column"
+      fxLayoutGap="16px"
+      fxLayoutAlign="start"
+      fxFlex="1 1 calc(50% - 16px)"
+      fxFlex.lt-md="1 1 100%"
+      formGroupName="value"
+      class="configure-expected-delivery-date"
+    >
+      <h3>{{ "expected_delivery_date_range" | translate }}</h3>
+      <div fxLayout="column">
+        <label>{{ "min_days" | translate }}</label>
+        <mat-form-field appearance="fill">
+          <input matInput type="number" appOnlyNumber formControlName="min" />
+          <mat-error>
+            <app-error-message
+              [control]="configurationForm.get('value').get('min')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column">
+        <label>{{ "max_days" | translate }}</label>
+        <mat-form-field appearance="fill">
+          <input matInput type="number" appOnlyNumber formControlName="max" />
+          <mat-error>
+            <app-error-message
+              [control]="configurationForm.get('value').get('max')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-error
+        class="compare-error"
+        *ngIf="configurationForm.get('value').errors?.compare"
+      >
+        {{ "compare_min_max_days" | translate }}
+      </mat-error>
+    </div>
+  </div>
+</app-form>

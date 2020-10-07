@@ -1,0 +1,8 @@
+<app-page-header
+  [pageHeaderOptions]="pageHeaderOptions"
+  (addClick)="onAddBackendOperator()"
+></app-page-header>
+
+<div class="page-content" *appHasAccess="hasListAccess">
+  <app-backend-operator-list-container></app-backend-operator-list-container>
+</div>

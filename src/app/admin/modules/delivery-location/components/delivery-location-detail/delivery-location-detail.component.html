@@ -1,0 +1,52 @@
+<div
+  class="page-title"
+  fxLayout="row"
+  fxLayoutGap="16px"
+  fxLayoutAlign="space-between center"
+>
+  <h2 class="page-title-content">
+    {{ "delivery_location" | translate }}
+  </h2>
+</div>
+
+<div class="container-fluid">
+  <mat-card class="delivery-location-detail detail-component">
+    <button
+      mat-icon-button
+      class="theme-icon-alternate is-edit"
+      *appHasAccess="hasEditAccess"
+      (click)="onEditDeliveryLocation(deliveryLocationDetail?.id)"
+      matTooltip="{{ 'edit_record' | translate }}"
+    >
+      <mat-icon>
+        <app-material-icon [iconName]="'EDIT'"></app-material-icon>
+      </mat-icon>
+    </button>
+    <mat-card-content>
+      <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start">
+        <h3>{{ deliveryLocationDetail?.name }}</h3>
+        <span>
+          <label>{{ "district_label" | translate }}</label>
+          {{ deliveryLocationDetail?.district?.name }}
+        </span>
+        <span>
+          <label>{{ "state_label" | translate }}</label>
+          {{ deliveryLocationDetail?.province?.name }}
+        </span>
+        <span>
+          <label>{{ "delivery_charge_label" | translate }}</label>
+          {{
+            deliveryLocationDetail?.delivery_charge | currency: "Rs. ":"symbol"
+          }}
+        </span>
+      </div>
+
+      <a class="text-link link-back-list" (click)="onBackClick()">
+        <mat-icon>
+          <app-material-icon [iconName]="'BACK_ARROW'"></app-material-icon>
+        </mat-icon>
+        <span>{{ "back_to_list_label" | translate }}</span>
+      </a>
+    </mat-card-content>
+  </mat-card>
+</div>

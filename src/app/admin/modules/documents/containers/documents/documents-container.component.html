@@ -1,0 +1,10 @@
+<app-documents
+  (termsAndConditionChange)="onTermsAndConditionChange($event)"
+  (privacyPolicyChange)="onPrivacyAndPolicyChange($event)"
+  [termsAndConditions]="termsAndConditions"
+  [privacyPolicy]="privacyPolicy"
+></app-documents>
+
+<div class="spinner" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

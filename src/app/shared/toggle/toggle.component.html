@@ -1,0 +1,9 @@
+<mat-slide-toggle
+  [disabled]="disabled"
+  [checked]="value"
+  [matTooltip]="getToolTip(value)"
+  [matTooltipPosition]="'right'"
+  (change)="onToggle($event)"
+  [(ngModel)]="value"
+  *appHasAccess="toggleOptions?.hasAccess"
+></mat-slide-toggle>

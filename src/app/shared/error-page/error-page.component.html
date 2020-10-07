@@ -1,0 +1,26 @@
+<div class="error-page-wrapper app-wrapper">
+  <div class="container">
+    <mat-card>
+      <mat-card-content
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="center center"
+      >
+        <figure>
+          <img src="assets/broken.png" alt="Broken Link" />
+        </figure>
+        <div>
+          <ng-content></ng-content>
+          <!-- <h2>Oops!!</h2>
+          <p>We are sorry, the page you are looking for could not be found.</p>-->
+          <p>Instead, try navigating to following pages:</p>
+          <p>
+            <a class="text-link" (click)="redirectToDefaultPage()">Home</a>
+            <a class="text-link" (click)="goToLogin()">Login</a>
+          </p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

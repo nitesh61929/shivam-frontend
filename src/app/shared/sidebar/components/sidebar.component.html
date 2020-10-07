@@ -1,0 +1,27 @@
+<aside>
+  <div class="logo-containers">
+    <figure class="ns-logo-container">
+      <img src="assets/ns-logo.png" alt="NS Award Logo" />
+    </figure>
+    <figure class="shivam-logo-container">
+      <img src="assets/logo.png" alt="Shivam Logo Main" />
+    </figure>
+  </div>
+
+  <mat-nav-list>
+    <ng-container *ngFor="let menuItem of menuLists">
+      <a
+        mat-list-item
+        (click)="goTo(menuItem.redirectTo)"
+        [routerLink]="menuItem.redirectTo"
+        routerLinkActive="active"
+        *appHasAccess="menuItem.has_access_module"
+      >
+        <mat-icon>
+          <app-material-icon [iconName]="menuItem.iconName"></app-material-icon>
+        </mat-icon>
+        <span>{{ menuItem.menuName }}</span>
+      </a>
+    </ng-container>
+  </mat-nav-list>
+</aside>

@@ -1,0 +1,16 @@
+<ng-container *ngFor="let action of actions">
+  <button
+    mat-icon-button
+    [color]="getColor(action.name)"
+    [class]="getClass(action.name)"
+    (click)="onClickAction(action.name)"
+    *appHasAccess="action.hasAccess"
+    [matTooltip]="getToolTip(action.name)"
+  >
+    <mat-icon>
+      <app-material-icon
+        [iconName]="getIconName(action.name)"
+      ></app-material-icon>
+    </mat-icon>
+  </button>
+</ng-container>

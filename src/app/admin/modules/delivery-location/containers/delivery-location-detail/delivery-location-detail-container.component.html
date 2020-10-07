@@ -1,0 +1,10 @@
+<app-delivery-location-detail
+  [deliveryLocationDetail$]="deliveryLocationDetail$"
+  (editDeliveryLocation)="onEditDeliveryLocation($event)"
+  (backClick)="onBackClick()"
+  *ngIf="!(loading$ | async)"
+></app-delivery-location-detail>
+
+<div class="spinner" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

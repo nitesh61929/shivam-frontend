@@ -1,0 +1,77 @@
+.auth {
+  &-wrapper {
+    @include linearGradient($lightPrimary, $primary);
+    min-height: 100%;
+    position: relative;
+    overflow: auto;
+    .container {
+      position: absolute !important;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      max-width: 1200px;
+      form {
+        flex: 1 1 50%;
+      }
+    }
+    .logo-containers {
+      display: block;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      flex: 1 1 50%;
+      figure {
+        display: inline-block;
+        text-align: center;
+        max-width: 200px;
+        height: 150px;
+        &.ns-logo-container {
+          background: $primary;
+          border-radius: 0.25rem;
+          max-width: 125px;
+        }
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
+    }
+    .theme-primary {
+      &.mat-button {
+        color: $white !important;
+      }
+    }
+  }
+  &-form-container {
+    &.mat-card {
+      &:after {
+        position: absolute;
+        top: -5px;
+        left: 0;
+        width: calc(50% - 2rem);
+        height: calc(100% + 10px);
+        content: "";
+        background: darken($white, 4%);
+        box-shadow: 0 0 1rem rgba($black, 0.15);
+        border-radius: 0.25rem 0 0 0.25rem;
+      }
+    }
+  }
+}
+
+.documents-menu {
+  transform: translateY(1rem);
+  text-align: right;
+  a {
+    @include pxtorem(13);
+    color: rgba($white, 0.75);
+    margin-left: 1.5rem;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    &:hover {
+      color: rgba($white, 0.9);
+    }
+  }
+}

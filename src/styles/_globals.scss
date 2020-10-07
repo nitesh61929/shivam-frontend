@@ -1,0 +1,82 @@
+%fullHeight {
+  height: 100%;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  @extend %fullHeight;
+}
+body {
+  @extend %fullHeight;
+  color: $textColor;
+  @include pxtorem(16);
+  font-family: $mainFont !important;
+  line-height: $lineGap !important;
+}
+img {
+  max-width: 100%;
+}
+.app-wrapper {
+  min-height: 100%;
+  position: relative;
+}
+.container {
+  width: 100%;
+  max-width: 75rem; //1200px
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  &-fluid {
+    max-width: inherit;
+    padding: 0 2rem;
+    position: relative;
+  }
+}
+.mat-drawer {
+  position: fixed !important;
+}
+.mat-drawer-content {
+  padding-bottom: 2rem;
+}
+.page-title {
+  padding: 1rem 2rem;
+  background: $primary;
+  margin-bottom: 2rem;
+  min-height: 76px;
+  position: relative;
+
+  &:after {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    content: "";
+    background: $yellow;
+  }
+  &-content {
+    position: relative;
+    min-width: 250px;
+  }
+  label {
+    position: absolute;
+    top: -2rem;
+    left: 0;
+    @include pxtorem(14);
+    color: rgba($white, 0.6);
+    font-weight: 400;
+  }
+  .theme-icon-alternate {
+    color: $white !important;
+  }
+}
+.page-content {
+  position: relative;
+  min-height: 100px;
+}
+.fxFlexWrap {
+  flex-wrap: wrap;
+}

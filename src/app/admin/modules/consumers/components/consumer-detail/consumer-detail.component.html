@@ -1,0 +1,103 @@
+<div
+  class="page-title"
+  fxLayout="row"
+  fxLayoutGap="16px"
+  fxLayoutAlign="space-between center"
+>
+  <h2 class="page-title-content">
+    {{ "consumer_detail" | translate }}
+  </h2>
+</div>
+
+<div class="container-fluid">
+  <mat-card class="detail-component consumer-detail">
+    <button
+      mat-icon-button
+      class="theme-icon-alternate is-edit"
+      (click)="onEditClick()"
+      matTooltip="{{ 'edit_record' | translate }}"
+      *appHasAccess="hasEditAccess"
+    >
+      <mat-icon>
+        <app-material-icon [iconName]="'EDIT'"></app-material-icon>
+      </mat-icon>
+    </button>
+    <mat-card-content>
+      <div
+        fxLayout="column"
+        fxLayout.xs="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start"
+        class="basic-info"
+      >
+        <h3>{{ consumerDetail?.name }}</h3>
+        <span *ngIf="consumerDetail?.username">
+          <label>{{ "username_label" | translate }}</label>
+          {{ consumerDetail?.username }}
+        </span>
+        <span *ngIf="consumerDetail?.details?.email">
+          <label>{{ "email_label" | translate }}</label>
+          {{ consumerDetail?.details?.email }}
+        </span>
+        <span *ngIf="consumerDetail?.mobile_number">
+          <label>{{ "mobile_label" | translate }}</label>
+          {{ consumerDetail?.mobile_number }}
+        </span>
+        <span *ngIf="consumerDetail?.details">
+          <label>{{ "address_label" | translate }}</label>
+          {{ getAddress(consumerDetail) }}
+        </span>
+      </div>
+
+      <div
+        *ngIf="(consumerDetail?.billing_details)[0]"
+        fxLayout="column"
+        fxLayout.xs="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start"
+        class="billing-address-info"
+      >
+        <h4>{{ "billing_details" | translate }}</h4>
+        <span *ngIf="(consumerDetail?.billing_details)[0]?.pan_no">
+          <label>{{ "pan_vat" | translate }}</label>
+          {{ (consumerDetail?.billing_details)[0]?.pan_no }}
+        </span>
+
+        <span>
+          <label>{{ "mobile_label" | translate }}</label>
+          {{ consumerDetail?.mobile_number }}</span
+        >
+        <span *ngIf="consumerDetail.billing_details[0]?.email">
+          <label>{{ "email_label" | translate }}</label>
+          {{ consumerDetail.billing_details[0]?.email }}</span
+        >
+      </div>
+
+      <div
+        *ngIf="(consumerDetail?.delivery_addresses)[0]"
+        fxLayout="column"
+        fxLayout.xs="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start"
+        class="delivery-address-info"
+      >
+        <h4>{{ "delivery_address" | translate }}</h4>
+        <span *ngIf="(consumerDetail?.delivery_addresses)[0]?.address">
+          <label>{{ "address_label" | translate }}</label>
+          {{ (consumerDetail?.delivery_addresses)[0]?.address }}
+        </span>
+        <span *ngIf="(consumerDetail?.delivery_addresses)[0]?.landmark">
+          <label>{{ "landmark_label" | translate }}</label>
+          {{ (consumerDetail?.delivery_addresses)[0]?.landmark }}
+        </span>
+      </div>
+
+      <a class="text-link link-back-list" (click)="onBackClick()">
+        <mat-icon>
+          <app-material-icon [iconName]="'BACK_ARROW'"></app-material-icon>
+        </mat-icon>
+        <span>{{ "back_to_list_label" | translate }}</span>
+      </a>
+    </mat-card-content>
+  </mat-card>
+</div>

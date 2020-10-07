@@ -1,0 +1,62 @@
+<ng-container [formGroup]="dateRangeForm">
+  <div class="fxFlexWrap is-date-range-container">
+    <div class="date start-date">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "start_date" | translate }}</mat-label>
+        <input
+          matInput
+          #startDateInput
+          [max]="selectedEndDate"
+          [matDatepicker]="startDatepicker"
+          formControlName="startDateCtrl"
+          [errorStateMatcher]="matcher"
+          readonly
+        />
+
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="startDatepicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startDatepicker></mat-datepicker>
+        <mat-error>
+          <app-error-message
+            [control]="dateRangeForm.get('startDateCtrl')"
+          ></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="date end-date">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "end_date" | translate }}</mat-label>
+
+        <input
+          matInput
+          #endDateInput
+          [min]="selectedStartDate"
+          [matDatepicker]="picker"
+          formControlName="endDateCtrl"
+          [errorStateMatcher]="matcher"
+          readonly
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>
+          <app-error-message
+            [control]="dateRangeForm.get('endDateCtrl')"
+          ></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-icon
+      *ngIf="showClearButton"
+      [matTooltip]="'clear_date' | translate"
+      [matTooltipPosition]="'above'"
+      matDatepickerToggleIcon
+      (click)="clearStartDate()"
+      class="icon-clear"
+      ><app-material-icon [iconName]="'CLEAR'"></app-material-icon
+    ></mat-icon>
+  </div>
+</ng-container>

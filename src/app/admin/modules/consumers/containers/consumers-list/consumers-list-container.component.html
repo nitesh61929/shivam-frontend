@@ -1,0 +1,15 @@
+<app-consumers-list
+  [userList$]="userList$"
+  [pagination$]="pagination$"
+  (paramChanged)="onParamChange($event)"
+  (consumerDetail)="onConsumerDetail($event)"
+  (consumerEdit)="onEditConsumer($event)"
+  (toggleConsumer)="onToggleConsumer($event)"
+  [downloadOptions]="downloadOptions"
+  [parameters]="getParam()"
+>
+</app-consumers-list>
+
+<div class="spinner" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

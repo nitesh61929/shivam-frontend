@@ -1,0 +1,270 @@
+<app-form
+  [formOptions]="formOptions"
+  (save)="onUpdateConsumerForm()"
+  (cancel)="onCancelConsumerForm()"
+  [formGroup]="consumerForm"
+>
+  <div
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start center"
+    fxLayoutAlign.lt-md="start"
+    class="fxFlexWrap"
+  >
+    <div
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutGap="16px"
+      fxLayoutAlign="start center"
+      fxLayoutAlign.lt-md="start"
+      class="fxFlexWrap"
+      fxFlex="1 1 calc(50% - 8px)"
+    >
+      <label fxFlex="1 1 calc(40% - 8px)">
+        {{ "mobile_label" | translate }}*
+      </label>
+      <mat-form-field
+        appearance="fill"
+        fxFlex="1 1 calc(60% - 8px)"
+        class="is-readonly"
+      >
+        <input matInput type="text" formControlName="mobile_number" />
+        <mat-error>
+          <app-error-message
+            [control]="consumerForm.get('mobile_number')"
+          ></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutGap="16px"
+      fxLayoutAlign="start center"
+      fxLayoutAlign.lt-md="start"
+      class="fxFlexWrap"
+      fxFlex="1 1 calc(50% - 8px)"
+    ></div>
+  </div>
+
+  <ng-container formGroupName="details">
+    <div
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutGap="16px"
+      fxLayoutAlign="start center"
+      fxLayoutAlign.lt-md="start"
+      class="fxFlexWrap"
+    >
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        class="fxFlexWrap"
+        fxFlex="1 1 calc(50% - 8px)"
+      >
+        <label fxFlex="1 1 calc(40% - 8px)">
+          {{ "first_name_label" | translate }}*
+        </label>
+        <mat-form-field appearance="fill" fxFlex="1 1 calc(60% - 8px)">
+          <input matInput type="text" formControlName="first_name" />
+          <mat-error>
+            <app-error-message
+              [control]="consumerForm.get('details').get('first_name')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        class="fxFlexWrap"
+        fxFlex="1 1 calc(50% - 8px)"
+      >
+        <label fxFlex="1 1 calc(40% - 8px)">
+          {{ "last_name_label" | translate }}*
+        </label>
+        <mat-form-field appearance="fill" fxFlex="1 1 calc(60% - 8px)">
+          <input matInput type="text" formControlName="last_name" />
+          <mat-error>
+            <app-error-message
+              [control]="consumerForm.get('details').get('last_name')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutGap="16px"
+      fxLayoutAlign="start center"
+      fxLayoutAlign.lt-md="start"
+      class="fxFlexWrap"
+    >
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        class="fxFlexWrap"
+        fxFlex="1 1 calc(50% - 8px)"
+      >
+        <label fxFlex="1 1 calc(40% - 8px)">
+          {{ "email_label" | translate }}
+        </label>
+        <mat-form-field appearance="fill" fxFlex="1 1 calc(60% - 8px)">
+          <input matInput type="text" formControlName="email" />
+          <mat-error>
+            <app-error-message
+              [control]="consumerForm.get('details').get('email')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        class="fxFlexWrap"
+        fxFlex="1 1 calc(50% - 8px)"
+      ></div>
+    </div>
+
+    <div
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutGap="16px"
+      fxLayoutAlign="start center"
+      fxLayoutAlign.lt-md="start"
+      class="fxFlexWrap"
+    >
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        class="fxFlexWrap"
+        fxFlex="1 1 calc(50% - 8px)"
+      >
+        <label fxFlex="1 1 calc(40% - 8px)">
+          {{ "street" | translate }}*
+        </label>
+        <mat-form-field appearance="fill" fxFlex="1 1 calc(60% - 8px)">
+          <input matInput type="text" formControlName="street" />
+          <mat-error>
+            <app-error-message
+              [control]="consumerForm.get('details').get('street')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        class="fxFlexWrap"
+        fxFlex="1 1 calc(50% - 8px)"
+      >
+        <label fxFlex="1 1 calc(40% - 8px)"> {{ "city" | translate }}* </label>
+        <mat-form-field appearance="fill" fxFlex="1 1 calc(60% - 8px)">
+          <input matInput type="text" formControlName="city" />
+          <mat-error>
+            <app-error-message
+              [control]="consumerForm.get('details').get('city')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutGap="16px"
+      fxLayoutAlign="start center"
+      fxLayoutAlign.lt-md="start"
+      class="fxFlexWrap"
+    >
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        class="fxFlexWrap"
+        fxFlex="1 1 calc(50% - 8px)"
+      >
+        <label fxFlex="1 1 calc(40% - 8px)">
+          {{ "state_label" | translate }}*
+        </label>
+        <mat-form-field appearance="fill" fxFlex="1 1 calc(60% - 8px)">
+          <mat-select
+            [placeholder]="'select_state_label' | translate"
+            formControlName="stateData"
+            (selectionChange)="onStateChange($event)"
+          >
+            <mat-option
+              *ngFor="let provinceWithDistrict of provincesWithDistricts"
+              [value]="provinceWithDistrict"
+              >{{ provinceWithDistrict.province.name }}</mat-option
+            >
+          </mat-select>
+
+          <mat-error>
+            <app-error-message
+              [control]="consumerForm.get('details').get('stateData')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.lt-md="start"
+        class="fxFlexWrap"
+        fxFlex="1 1 calc(50% - 8px)"
+      >
+        <label fxFlex="1 1 calc(40% - 8px)">
+          {{ "district_label" | translate }}*
+        </label>
+        <mat-form-field appearance="fill" fxFlex="1 1 calc(60% - 8px)">
+          <mat-select
+            [placeholder]="'select_district_label' | translate"
+            formControlName="districtData"
+            (selectionChange)="onDistrictChange($event)"
+          >
+            <mat-option
+              *ngFor="let district of selectedDistricts"
+              [value]="district"
+              >{{ district.name }}</mat-option
+            >
+          </mat-select>
+          <mat-error>
+            <app-error-message
+              [control]="consumerForm.get('details').get('districtData')"
+            ></app-error-message
+          ></mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </ng-container>
+</app-form>

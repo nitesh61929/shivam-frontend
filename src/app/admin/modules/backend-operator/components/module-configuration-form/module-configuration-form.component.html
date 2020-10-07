@@ -1,0 +1,131 @@
+<div
+  fxLayout="column"
+  fxLayoutGap="16px"
+  fxLayoutAlign="start"
+  class="fieldset"
+>
+  <legend>{{ "module_configuration_label" | translate }}</legend>
+
+  <p class="method-permission-note helper-text">
+    {{ "method_permission_note" | translate }}
+  </p>
+
+  <div
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start space-between"
+    fxLayoutAlign.lt-md="start"
+    class="configurable-row"
+    *ngFor="
+      let moduleWithMethodFormGroup of moduleWithMethodsFormArray.controls;
+      index as i;
+      let first = first
+    "
+  >
+    <ng-container [formGroup]="moduleWithMethodFormGroup">
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start"
+        fxLayoutAlign.lt-md="start"
+        fxFlex="1 1 calc(50% - 8px)"
+        fxFlex.lt-md="1 1 100%"
+      >
+        <label fxFlex="1 1 40%" fxFlex.lt-md="1 1 100%"
+          >{{ "modules_label" | translate }}*</label
+        >
+        <mat-form-field
+          appearance="fill"
+          fxFlex="1 1 calc(60% - 16px)"
+          fxFlex.lt-md="1 1 100%"
+        >
+          <mat-select
+            #module
+            [placeholder]="'select_module_label' | translate"
+            formControlName="module"
+          >
+            <mat-option
+              *ngFor="let moduleWithMethod of modulesWithMethods"
+              [value]="moduleWithMethod.module"
+              >{{
+                moduleWithMethod.module.toLowerCase() | translate
+              }}</mat-option
+            >
+          </mat-select>
+          <mat-error>
+            <app-error-message
+              [control]="moduleWithMethodFormGroup.get('module')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="start"
+        fxLayoutAlign.lt-md="start"
+        fxFlex="1 1 calc(50% - 8px)"
+        fxFlex.lt-md="1 1 100%"
+      >
+        <label fxFlex="1 1 40%" fxFlex.lt-md="1 1 100%"
+          >{{ "methods_label" | translate }}*</label
+        >
+        <mat-form-field
+          appearance="fill"
+          fxFlex="1 1 calc(60% - 16px)"
+          fxFlex.lt-md="1 1 100%"
+          class="multiple-permissions"
+        >
+          <mat-select
+            [placeholder]="'select_method_label' | translate"
+            multiple
+            formControlName="methods"
+            (selectionChange)="
+              onSelect(moduleWithMethodFormGroup.get('methods'), getMethods(i))
+            "
+          >
+            <app-select-check-all
+              [model]="moduleWithMethodFormGroup.get('methods')"
+              [values]="getMethods(i)"
+            >
+            </app-select-check-all>
+            <mat-option
+              *ngFor="let method of getMethods(i)"
+              [value]="method"
+              [matTooltip]="method.toLowerCase() | translate"
+            >
+              {{ method.toLowerCase() | translate }}
+            </mat-option>
+          </mat-select>
+          <mat-error>
+            <app-error-message
+              [control]="moduleWithMethodFormGroup.get('methods')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <a
+        mat-mini-fab
+        color="warn"
+        (click)="onRemove(i)"
+        *ngIf="moduleWithMethodsFormArray.length > 1"
+      >
+        <mat-icon>
+          <app-material-icon [iconName]="'REMOVE'"></app-material-icon>
+        </mat-icon>
+      </a>
+    </ng-container>
+  </div>
+
+  <a class="add-more text-link" (click)="addModuleWithMethodForm()">
+    <mat-icon>
+      <app-material-icon [iconName]="'ADD'"></app-material-icon>
+    </mat-icon>
+    <span>{{ "add_more_label" | translate }}</span>
+  </a>
+</div>

@@ -1,0 +1,89 @@
+<div
+  class="page-title"
+  fxLayout="row"
+  fxLayoutGap="16px"
+  fxLayoutAlign="space-between center"
+>
+  <h2 class="page-title-content">
+    {{ "backend_operator_detail" | translate }}
+  </h2>
+</div>
+
+<div class="container-fluid">
+  <div
+    class="delivery-location-detail detail-component"
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start space-between"
+    fxLayoutAlign.lt-md="start"
+  >
+    <mat-card fxFlex="1 1 100%" fxFlex.lt-md="1 1 100%" class="records-table">
+      <button
+        mat-icon-button
+        class="theme-icon-alternate is-edit"
+        matTooltip="{{ 'edit_record' | translate }}"
+        (click)="onEdit()"
+      >
+        <mat-icon>
+          <app-material-icon [iconName]="'EDIT'"></app-material-icon>
+        </mat-icon>
+      </button>
+
+      <mat-card-content>
+        <div
+          fxLayout="column"
+          fxLayoutGap="10px"
+          fxLayoutAlign="start"
+          class="backend-operator-info"
+        >
+          <h3>
+            {{ backendOperatorDetail?.details?.first_name }}
+            {{ backendOperatorDetail?.details?.last_name }}
+          </h3>
+
+          <span *ngIf="backendOperatorDetail?.details?.email">
+            <label>{{ "email_label" | translate }}</label>
+            {{ backendOperatorDetail?.details?.email }}
+          </span>
+          <span>
+            <label>{{ "username_label" | translate }}</label>
+            {{ backendOperatorDetail?.username }}
+          </span>
+          <span>
+            <label>{{ "mobile_label" | translate }}</label>
+            {{ backendOperatorDetail?.mobile_number }}
+          </span>
+        </div>
+      </mat-card-content>
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="module_name">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "modules_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let moduleWithMethod">
+            {{ moduleWithMethod.module | translate }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="method_name">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "methods_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let moduleWithMethod">
+            {{ moduleWithMethod.methods.join(", ") }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <a class="text-link link-back-list" (click)="onBackClick()">
+        <mat-icon>
+          <app-material-icon [iconName]="'BACK_ARROW'"></app-material-icon>
+        </mat-icon>
+        <span>{{ "back_to_list_label" | translate }}</span>
+      </a>
+    </mat-card>
+  </div>
+</div>

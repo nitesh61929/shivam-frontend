@@ -1,0 +1,108 @@
+<app-form
+  [formOptions]="formOptions"
+  [formGroup]="deliveryLocationForm"
+  (save)="onSaveOrUpdateDeliveryLocationForm()"
+  (cancel)="onCancelDeliveryLocationForm()"
+>
+  <div
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start center"
+    fxLayoutAlign.xs="start"
+  >
+    <label fxFlex="1 1 30%" fxFlex.xs="1 1 100%">
+      {{ "location_area_label" | translate }}*
+    </label>
+    <mat-form-field appearance="fill" fxFlex="1 1 70%" fxFlex.xs="1 1 100%">
+      <input matInput type="text" formControlName="name" />
+      <mat-error>
+        <app-error-message
+          [control]="deliveryLocationForm.get('name')"
+        ></app-error-message
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <div
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start center"
+    fxLayoutAlign.xs="start"
+  >
+    <label fxFlex="1 1 30%" fxFlex.xs="1 1 100%">
+      {{ "state_label" | translate }}*
+    </label>
+    <mat-form-field appearance="fill" fxFlex="1 1 70%" fxFlex.xs="1 1 100%">
+      <mat-select
+        [placeholder]="'select_state_label' | translate"
+        formControlName="province"
+        (selectionChange)="onStateChange($event)"
+      >
+        <mat-option
+          *ngFor="let provinceWithDistrict of provincesWithDistricts"
+          [value]="provinceWithDistrict"
+          >{{ provinceWithDistrict.province.name }}</mat-option
+        >
+      </mat-select>
+
+      <mat-error>
+        <app-error-message
+          [control]="deliveryLocationForm.get('province')"
+        ></app-error-message
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <div
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start center"
+    fxLayoutAlign.xs="start"
+  >
+    <label fxFlex="1 1 30%" fxFlex.xs="1 1 100%">
+      {{ "district_label" | translate }}*
+    </label>
+    <mat-form-field appearance="fill" fxFlex="1 1 70%" fxFlex.xs="1 1 100%">
+      <mat-select
+        [compareWith]="compareObjects"
+        [placeholder]="'select_district_label' | translate"
+        formControlName="district"
+        (selectionChange)="onDistrictChange($event)"
+      >
+        <mat-option
+          *ngFor="let district of selectedDistricts"
+          [value]="district"
+          >{{ district.name }}</mat-option
+        >
+      </mat-select>
+      <mat-error>
+        <app-error-message
+          [control]="deliveryLocationForm.get('district')"
+        ></app-error-message
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <div
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start center"
+    fxLayoutAlign.xs="start"
+  >
+    <label fxFlex="1 1 30%" fxFlex.xs="1 1 100%">
+      {{ "delivery_charge_label" | translate }}*
+    </label>
+    <mat-form-field appearance="fill" fxFlex="1 1 70%" fxFlex.xs="1 1 100%">
+      <input matInput type="text" formControlName="delivery_charge" />
+      <mat-error>
+        <app-error-message
+          [control]="deliveryLocationForm.get('delivery_charge')"
+        ></app-error-message
+      ></mat-error>
+    </mat-form-field>
+  </div>
+</app-form>

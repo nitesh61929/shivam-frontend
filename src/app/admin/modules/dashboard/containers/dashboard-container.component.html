@@ -1,0 +1,9 @@
+<app-dashboard
+  (paramChanged)="onParamChange($event)"
+  (orderForPaymentMethodParamChanged)="
+    onOrderForPaymentMethodParamChange($event)
+  "
+  [ordersAmount$]="ordersAmount$"
+  [consumersSmsList$]="consumersSmsList$"
+  [ordersByPaymentMethods$]="ordersByPaymentMethods$"
+></app-dashboard>

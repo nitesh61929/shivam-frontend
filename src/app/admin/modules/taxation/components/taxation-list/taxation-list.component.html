@@ -1,0 +1,38 @@
+<div class="container-fluid">
+  <div class="table-wrapper">
+    <mat-card class="records-table-taxation records-table">
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "title_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let taxation">
+            <a>{{ taxation.name }}</a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "value_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let taxation">{{ taxation.value }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "actions_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let taxation">
+            <app-actions
+              [actions]="actions"
+              (actionClicked)="onActionClick($event, taxation.id)"
+            ></app-actions>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </mat-card>
+  </div>
+</div>

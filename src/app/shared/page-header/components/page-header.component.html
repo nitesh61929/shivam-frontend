@@ -1,0 +1,21 @@
+<div
+  class="page-title"
+  fxLayout="row"
+  fxLayoutGap="16px"
+  fxLayoutAlign="space-between center"
+>
+  <h2 class="page-title-content">{{ getHeaderTitle() }}</h2>
+  <ng-container *appHasAccess="pageHeaderOptions?.hasAddAccess">
+    <button
+      mat-raised-button
+      class="btn-add"
+      *ngIf="pageHeaderOptions?.showAddBtn"
+      (click)="onAddClick()"
+    >
+      <mat-icon>
+        <app-material-icon [iconName]="'ADD'"></app-material-icon
+      ></mat-icon>
+      {{ "add_label" | translate }}
+    </button>
+  </ng-container>
+</div>

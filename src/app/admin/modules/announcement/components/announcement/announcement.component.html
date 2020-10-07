@@ -1,0 +1,8 @@
+<app-page-header
+  [pageHeaderOptions]="pageHeaderOptions"
+  (addClick)="onAddPromotion()"
+></app-page-header>
+
+<div class="page-content" *appHasAccess="hasListAccess">
+  <app-announcement-list-container></app-announcement-list-container>
+</div>

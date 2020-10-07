@@ -1,0 +1,93 @@
+<div class="container-fluid">
+  <div class="table-wrapper">
+    <mat-card class="records-table-consumers records-table">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="start"
+        class="records-filter section-header fxFlex fxFlexWrap"
+      >
+        <div class="search-filter fxFlex--item">
+          <app-search-input (searched)="onSearch($event)"></app-search-input>
+        </div>
+
+        <div class="has-button fxFlex--item">
+          <app-download
+            *appHasAccess="hasDownloadAccess"
+            [downloadOptions]="downloadOptions"
+            [parameters]="parameters"
+          ></app-download>
+        </div>
+      </div>
+
+      <ng-container *ngIf="listLength === 0">
+        <div class="no-results">
+          <p>{{ "result_not_found_label" | translate }}</p>
+        </div>
+      </ng-container>
+
+      <table mat-table [dataSource]="dataSource" *ngIf="listLength > 0">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "name_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let consumer">
+            {{ consumer?.name || "N/A" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "address_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let consumer">
+            {{ getAddress(consumer?.details) || "N/A" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="contact">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "mobile_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let consumer">
+            {{ consumer?.mobile_number }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email_id">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "email_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let consumer">
+            {{ consumer?.details?.email || "N/A" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "actions_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let consumer">
+            <app-actions
+              [actions]="actions"
+              (actionClicked)="onActionClick($event, consumer?.id)"
+            ></app-actions>
+            <app-toggle
+              (toggled)="onToggleStatus($event, consumer.id)"
+              [value]="getToggleValue(consumer.status)"
+              [toggleOptions]="toggleOptions"
+            ></app-toggle>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <mat-paginator
+        [length]="listLength"
+        [pageSize]="perPage"
+        [pageSizeOptions]="getDefaultPageSizeOptions()"
+      >
+      </mat-paginator>
+    </mat-card>
+  </div>
+</div>

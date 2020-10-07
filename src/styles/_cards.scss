@@ -1,0 +1,70 @@
+.mat-card {
+  box-shadow: 0 3px 6px rgba($black, 0.1) !important;
+  font-family: $mainFont !important;
+  padding: 2rem !important;
+  &-content {
+    @include pxtorem(16);
+    color: $textColor !important;
+  }
+}
+
+.order-detail {
+  .order-info {
+    padding: 0 1.5rem 1.5rem;
+    display: flex;
+    span {
+      &:first-of-type {
+        label {
+          display: block;
+          margin-bottom: 0.25rem;
+        }
+      }
+    }
+    i {
+      font-style: normal;
+      margin-right: 0.75rem;
+      &.order-id-no {
+        @include pxtorem(22);
+        margin-bottom: 1rem;
+        display: inline-block;
+      }
+    }
+
+    .billing-info {
+      padding: 0 2rem;
+      span {
+        &:first-of-type {
+          label {
+            display: inline-block;
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.consumer-detail {
+  .billing-address-info {
+    margin: 1.5rem 0;
+    padding: 1.5rem 0;
+    border-top: 1px solid darken($white, 4%);
+    border-bottom: 1px solid darken($white, 4%);
+  }
+  h4 {
+    @include pxtorem(18);
+    padding-bottom: 0.25rem;
+  }
+}
+
+.shivam-warehouse-chip {
+  span {
+    padding: 0.25rem;
+    background: $primary;
+    color: $white;
+    @include pxtorem(14);
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+  }
+}

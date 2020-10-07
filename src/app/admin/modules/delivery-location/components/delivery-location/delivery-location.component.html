@@ -1,0 +1,8 @@
+<app-page-header
+  [pageHeaderOptions]="pageHeaderOptions"
+  (addClick)="onAddDeliveryLocation()"
+></app-page-header>
+
+<div class="page-content" *appHasAccess="hasListAccess">
+  <app-delivery-location-list-container></app-delivery-location-list-container>
+</div>

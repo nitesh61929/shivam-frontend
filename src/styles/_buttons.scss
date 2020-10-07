@@ -1,0 +1,192 @@
+button {
+  &[disabled] {
+    cursor: not-allowed !important;
+    opacity: 0.75;
+    > span,
+    > div {
+      pointer-events: none;
+    }
+  }
+}
+.mat-button,
+.mat-raised-button {
+  @include pxtorem(16);
+  padding: 0.25rem 1rem !important;
+  font-family: $mainFont !important;
+  transition: cubic-bezier(0.6, -0.28, 0.735, 0.045) 0.25s ease-in-out;
+}
+.btn-add {
+  color: $primary !important;
+  font-weight: 700;
+}
+.theme-primary {
+  background: $green;
+  color: $white !important;
+
+  .mat-button-wrapper {
+    color: inherit !important;
+  }
+  &:hover {
+    background: darken($green, 5%);
+  }
+}
+.theme-alternate {
+  background: $blueGreen !important;
+  &:hover {
+    background: darken($blueGreen, 5%);
+  }
+}
+.theme-gray {
+  background: $textColor !important;
+  &:hover {
+    background: darken($textColor, 5%);
+  }
+}
+.theme-icon-alternate {
+  color: $blueGreen !important;
+  &:hover {
+    color: darken($blueGreen, 5%);
+  }
+}
+.theme-icon-error {
+  color: $error !important;
+  &:hover {
+    color: darken($error, 5%);
+  }
+}
+.theme-icon-primary {
+  color: $primary !important;
+  &:hover {
+    color: darken($primary, 5%);
+  }
+}
+.theme-outline-primary {
+  border: 1px solid $primary !important;
+  color: $primary;
+}
+.mat-fab {
+  &.mat-primary {
+    background-color: $primary !important;
+  }
+}
+.is-edit {
+  position: absolute !important;
+  top: 1rem;
+  right: 1rem;
+}
+.btn-download {
+  border: 1px solid $blueGreen !important;
+  color: $blueGreen !important;
+  padding: 0.25rem 1rem !important;
+  &:focus {
+    background: $blueGreen;
+    color: $white !important;
+    .mat-icon {
+      color: $white;
+    }
+  }
+  .mat-icon {
+    color: $blueGreen;
+  }
+}
+.btn-sync {
+  border: 1px solid $yellow !important;
+  color: $yellow !important;
+  padding: 0.25rem 1rem !important;
+  margin-left: 1rem !important;
+  .mat-icon {
+    color: $yellow;
+  }
+  &.is-fetching,
+  &:focus {
+    background: $yellow;
+    color: $white !important;
+    .mat-icon {
+      color: $white;
+    }
+  }
+  &.is-fetching {
+    .mat-icon {
+      animation: syncing 2s linear 2s infinite;
+    }
+  }
+}
+
+@keyframes syncing {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mat-slide-toggle {
+  transform: translateY(3px);
+  &.mat-checked {
+    .mat-slide-toggle-thumb,
+    .mat-ripple-element {
+      background-color: $primary;
+    }
+    .mat-slide-toggle-bar {
+      background-color: rgba($primary, 0.5);
+    }
+  }
+}
+
+.btn-generate-pwd {
+  position: absolute !important;
+  top: -7px;
+  right: 0;
+  .mat-icon {
+    color: $primary;
+  }
+}
+.mat-primary.mat-button {
+  color: $primary !important;
+  .has-img-preview & {
+    margin: 0.5rem 0 0 auto;
+  }
+}
+
+.image-upload-btn {
+  display: inline-block;
+  position: relative;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background: $yellow;
+  color: $white;
+  cursor: pointer;
+  text-align: center;
+  margin-bottom: 0.75rem;
+  &:hover {
+    background: rgba($yellow, 0.9);
+  }
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  .mat-icon {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  label {
+    padding: 0 !important;
+    margin: 0 0 0 0.5rem !important;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.remove-media {
+  position: absolute !important;
+  top: 0.25rem;
+  right: 0.25rem;
+  background: rgba($white, 0.5);
+  z-index: 100;
+}

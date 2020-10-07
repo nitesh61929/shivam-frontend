@@ -1,0 +1,7 @@
+<app-page-header
+  [pageHeaderOptions]="pageHeaderOptions"
+  (addClick)="onAddProduct()"
+></app-page-header>
+<div class="page-content" *appHasAccess="hasListAccess">
+  <app-product-list-container></app-product-list-container>
+</div>

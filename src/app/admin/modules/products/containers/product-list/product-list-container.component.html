@@ -1,0 +1,23 @@
+<ng-container>
+  <app-product-list
+    [products$]="products$"
+    [pagination$]="pagination$"
+    (productDelete)="onDeleteProduct($event)"
+    (productEdit)="onEditProduct($event)"
+    (productDetail)="onProductDetail($event)"
+    (paramChanged)="onParamChanged($event)"
+  ></app-product-list>
+
+  <!-- <div
+    class="container-fluid"
+    *ngIf="!parameters.search && (pagination$ | async)?.total === 0"
+  >
+    <mat-card>
+      {{ "no_recorded_data_label" | translate }}
+    </mat-card>
+  </div> -->
+</ng-container>
+
+<div class="spinner" *ngIf="loadingProduct$ | async">
+  <mat-spinner></mat-spinner>
+</div>

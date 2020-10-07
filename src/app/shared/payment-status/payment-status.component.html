@@ -1,0 +1,47 @@
+<div
+  class="error-page-wrapper document-not-found payment-status success"
+  *ngIf="paymentStatus"
+>
+  <div class="container">
+    <mat-card>
+      <mat-card-content
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="center center"
+      >
+        <div>
+          <span>
+            <mat-icon>check</mat-icon>
+          </span>
+          <h2>Payment Successful</h2>
+          <p>Your payment was processed successfully.</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div
+  class="error-page-wrapper document-not-found payment-status failure"
+  *ngIf="!paymentStatus"
+>
+  <div class="container">
+    <mat-card>
+      <mat-card-content
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutGap="16px"
+        fxLayoutAlign="center center"
+      >
+        <div>
+          <span>
+            <mat-icon>close</mat-icon>
+          </span>
+          <h2>Payment Failed</h2>
+          <p>Your payment could not be processed.</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

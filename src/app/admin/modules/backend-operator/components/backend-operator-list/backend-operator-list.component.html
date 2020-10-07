@@ -1,0 +1,113 @@
+<div class="container-fluid">
+  <div class="table-wrapper">
+    <mat-card class="records-table-backend-operator records-table">
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutAlign="start"
+        fxLayoutAlign.xs="start"
+        class="records-filter section-header fxFlex fxFlexWrap"
+      >
+        <div class="search-filter fxFlex--item">
+          <app-search-input (searched)="onSearch($event)"></app-search-input>
+        </div>
+        <div class="has-button fxFlex--item" *ngIf="listLength > 0">
+          <app-download
+            *appHasAccess="hasDownloadAccess"
+            [downloadOptions]="downloadOptions"
+            [parameters]="parameters"
+          ></app-download>
+        </div>
+      </div>
+
+      <ng-container *ngIf="listLength === 0">
+        <div class="no-results">
+          <p>{{ "result_not_found_label" | translate }}</p>
+        </div>
+      </ng-container>
+
+      <table mat-table [dataSource]="dataSource" *ngIf="listLength > 0">
+        <ng-container matColumnDef="first_name">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "first_name_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let backendOperator">
+            <p>{{ backendOperator?.details?.first_name }}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="last_name">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "last_name_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let backendOperator">
+            <p>{{ backendOperator?.details?.last_name }}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="mobile">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "mobile_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let backendOperator">
+            <p>{{ backendOperator.mobile_number }}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "email_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let backendOperator">
+            <p>{{ backendOperator?.details?.email || "N/A" }}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "username_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let backendOperator">
+            <p>{{ backendOperator.username }}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="modules_accessible">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "modules_accessible_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let backendOperator">
+            <p>{{ getAccessibleModules(backendOperator.permissions) }}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "actions_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let backendOperator">
+            <app-actions
+              [actions]="actions"
+              (actionClicked)="onActionClick($event, backendOperator.id)"
+            ></app-actions>
+            <app-toggle
+              (toggled)="onToggleStatus($event, backendOperator.id)"
+              [value]="getToggleValue(backendOperator.status)"
+              [toggleOptions]="toggleOptions"
+            ></app-toggle>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        [length]="listLength"
+        [pageSize]="perPage"
+        [pageSizeOptions]="getDefaultPageSizeOptions()"
+      >
+      </mat-paginator>
+    </mat-card>
+  </div>
+</div>

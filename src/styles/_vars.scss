@@ -1,0 +1,22 @@
+// COLOR SETTINGS
+$white: #fff;
+$black: #000;
+$red: #ff0000;
+$green: #007f3e;
+$lightGreen: #a6ce39;
+$gray: #ebebeb;
+$lightGray: #fafafa;
+$textColor: lighten($black, 40%);
+$blueGreen: #33b990;
+$yellow: #e8b10c;
+
+$primary: $green;
+$lightPrimary: $lightGreen;
+$error: $red;
+
+// FONT SETTINGS
+$mainFont: "Sintony", sans-serif;
+$headerFont: "Raleway", sans-serif;
+$size: 16;
+$lineGap: 1.25;
+$fontSizes: 10, 12, 14, 16, 18, 20, 22, 24, 26;

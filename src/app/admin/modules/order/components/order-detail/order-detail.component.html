@@ -1,0 +1,243 @@
+<app-page-header [pageHeaderOptions]="pageHeaderOptions"></app-page-header>
+
+<div class="container-fluid">
+  <div
+    class="order-detail detail-component"
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start space-between"
+  >
+    <div
+      class="table-wrapper"
+      fxFlex="1 1 calc(70% - 8px)"
+      fxFlex.lt-md="1 1 100%"
+    >
+      <mat-card class="records-table-products records-table">
+        <mat-card-content class="order-info">
+          <div
+            fxLayout="column"
+            fxLayout.xs="column"
+            fxLayoutGap="8px"
+            fxLayoutAlign="start"
+          >
+            <span>
+              <label>{{ "order_id" | translate }}</label>
+              <i class="order-id-no">{{ orderDetail.order_number }}</i>
+              <i
+                [class]="getStatusClass(orderDetail.status)"
+                class="order-status"
+                >{{ orderDetail.status }}</i
+              >
+            </span>
+
+            <span *ngIf="orderDetail?.ordered_on">
+              <label>{{ "ordered_date" | translate }}</label>
+              {{ getFormattedDate(orderDetail.ordered_on) | date: "shortDate" }}
+            </span>
+
+            <span *ngIf="orderDetail?.expected_delivery_date">
+              <label>{{ "expected_delivery_date" | translate }}</label>
+              {{
+                getFormattedDate(orderDetail.expected_delivery_date)
+                  | date: "shortDate"
+              }}
+            </span>
+
+            <span *ngIf="orderDetail?.delivery_location_name">
+              <label>{{ "single_delivery_location" | translate }}</label>
+              {{ orderDetail?.delivery_location_name }}
+            </span>
+
+            <span *ngIf="orderDetail?.payment?.payment_method?.title">
+              <label>{{ "payment_method" | translate }}</label>
+              {{ orderDetail?.payment?.payment_method?.title }}
+            </span>
+
+            <span class="vat-billed-detail" *ngIf="orderDetail?.bill_number">
+              <label>{{ "bill_number" | translate }}</label>
+              {{ orderDetail?.bill_number }}
+            </span>
+
+            <span *ngIf="orderDetail?.issued_date">
+              <label>{{ "billed_date" | translate }}</label>
+              {{
+                getFormattedDate(orderDetail?.issued_date) | date: "shortDate"
+              }}
+            </span>
+
+            <span *ngIf="showAllocatedTo(orderDetail)">
+              <label>{{ "allocated_to" | translate }}</label>
+              {{ orderDetail?.delivery_partner?.business_name }}
+            </span>
+          </div>
+
+          <div
+            class="billing-info"
+            fxLayout="row"
+            fxLayout.lt-md="column"
+            fxLayoutGap="16px"
+          >
+            <div fxLayout="column" fxLayoutGap="8px">
+              <h3>{{ "billing_info_label" | translate }}</h3>
+              <span *ngIf="orderDetail.billing_name">
+                <label>{{ "name_label" | translate }}</label>
+                {{ orderDetail.billing_name }}
+              </span>
+
+              <span *ngIf="orderDetail.pan_no">
+                <label>{{ "pan_vat" | translate }}</label>
+                {{ orderDetail.pan_no }}
+              </span>
+
+              <span *ngIf="orderDetail.delivery_address">
+                <label>{{ "delivery_address" | translate }}</label>
+                {{ orderDetail.delivery_address }}
+              </span>
+
+              <span *ngIf="orderDetail.landmark">
+                <label>{{ "landmark_label" | translate }}</label>
+                {{ orderDetail.landmark }}
+              </span>
+
+              <span *ngIf="orderDetail.contact_no">
+                <label>{{ "contact_label" | translate }}</label>
+                {{ orderDetail.contact_no }}
+              </span>
+
+              <span *ngIf="orderDetail.email">
+                <label>{{ "email_label" | translate }}</label>
+                {{ getEmail(orderDetail) }}
+              </span>
+            </div>
+            <div fxLayout="column" fxLayoutGap="8px">
+              <h3>{{ "personal_info" | translate }}</h3>
+              <span *ngIf="orderDetail.personalInfo.first_name">
+                <label>{{ "name_label" | translate }}</label>
+                {{ orderDetail.personalInfo.first_name }}
+                {{ orderDetail.personalInfo.last_name }}
+              </span>
+              <span *ngIf="orderDetail.personalInfo.mobile_number">
+                <label>{{ "contact_label" | translate }}</label>
+                {{ orderDetail.personalInfo.mobile_number }}
+              </span>
+            </div>
+          </div>
+        </mat-card-content>
+
+        <div
+          *ngIf="orderDetail?.cancel_reason"
+          class="order-cancellation-reason"
+        >
+          <p>
+            <label>{{ "cancel_reason" | translate }}</label>
+            <span>{{ orderDetail?.cancel_reason }}</span>
+          </p>
+        </div>
+
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="product_name">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "product_name_label" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let product">
+              <figure class="list-thumb">
+                <img src="{{ product.image_url }}" />
+              </figure>
+              <span>
+                {{ product.product_name }}
+
+                <i
+                  class="order-line-foc-label"
+                  *ngIf="product.vat_amount === 0 && product.final_rate === 0"
+                >
+                  FOC
+                </i>
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "quantity_label" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let product">
+              {{ product.quantity }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="rate">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "rate_label" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let product">
+              {{ product.final_rate | currency: "Rs. ":"symbol" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="discount">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "discount_label" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let product">
+              {{ product.discount_amount | currency: "Rs. ":"symbol" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "amount" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let product">
+              {{ product.amount | currency: "Rs. ":"symbol" }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <div class="totals" fxLayout="column" fxLayoutGap="16px">
+          <p>
+            <label>{{ "grand_total_label" | translate }}</label>
+            <span>{{
+              orderDetail.grand_total | currency: "Rs. ":"symbol"
+            }}</span>
+          </p>
+        </div>
+        <div class="order-feedback" *ngIf="orderDetail?.feedbacks.length > 0">
+          <h3>{{ "feedback_label" | translate }}</h3>
+          <div
+            class="feedback-lists"
+            *ngFor="let feedback of orderDetail?.feedbacks"
+          >
+            <p>
+              <span>
+                {{ feedback?.comment }}
+              </span>
+              <app-rating [ratingNum]="feedback?.rating"></app-rating>
+              <label>
+                {{ getNameForFeedback(feedback) }}
+              </label>
+            </p>
+          </div>
+        </div>
+        <a class="text-link link-back-list" (click)="onBackClick()">
+          <mat-icon>
+            <app-material-icon [iconName]="'BACK_ARROW'"></app-material-icon>
+          </mat-icon>
+          <span>{{ "back_to_list_label" | translate }}</span>
+        </a>
+      </mat-card>
+    </div>
+    <ng-container>
+      <app-assign-dealer
+        [onlineDeliveryPartners]="onlineDeliveryPartners"
+        (assignDealer)="onDealerAssign($event)"
+        [orderDetail]="orderDetail"
+        (cancelOrder)="onCancelOrder($event)"
+        *ngIf="checkStatus()"
+      ></app-assign-dealer>
+    </ng-container>
+  </div>
+</div>

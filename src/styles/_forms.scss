@@ -1,0 +1,748 @@
+%fullWidthFields {
+  width: 100% !important;
+}
+
+%hasborderradiusbtnoborder {
+  border: 0;
+  border-radius: 0.25rem;
+}
+
+.has-button {
+  text-align: right;
+}
+
+textarea {
+  min-height: 5rem;
+  line-height: 1.25rem !important;
+}
+
+.mat-form-field {
+  $this: &;
+  margin-bottom: 1rem;
+
+  &-ripple {
+    background-color: rgba($black, 0.5);
+    .mat-focused & {
+      background-color: $primary !important;
+    }
+  }
+
+  &-label {
+    .mat-focused & {
+      color: $primary !important;
+    }
+  }
+}
+
+// AUTH FORMS STYLES
+.auth {
+  &-form-container {
+    height: 50vh;
+
+    .mat-form-field {
+      width: 100%;
+
+      &-label {
+        padding-left: 2.25rem;
+      }
+
+      &-should-float {
+        .mat-form-field-label {
+          padding-left: 3rem;
+        }
+      }
+
+      .mat-icon {
+        color: $textColor;
+        position: absolute;
+        left: 5px;
+        bottom: 15px;
+      }
+
+      input {
+        padding-left: 2.25rem;
+        @extend %fullWidthFields;
+        @extend %hasborderradiusbtnoborder;
+      }
+
+      .mat-button {
+        @extend %fullWidthFields;
+        @extend %hasborderradiusbtnoborder;
+      }
+    }
+  }
+}
+
+// APP FORM STYLES
+.app-wrapper {
+  form {
+    div[fxLayout] {
+      margin-bottom: 0 !important;
+    }
+    label {
+      text-align: right;
+      padding: 1rem 1rem 0 0;
+      margin-bottom: 0.5rem;
+      align-self: flex-start;
+    }
+
+    .mat-form-field {
+      border-radius: 0;
+
+      &-flex {
+        border: 1px solid $gray;
+        background-color: rgba(0, 0, 0, 0.02) !important;
+      }
+
+      &-infix {
+        border-top: 0 !important;
+      }
+
+      &-appearance-fill {
+        .mat-form-field-underline {
+          &:before {
+            border-radius: 0.25rem;
+            background-color: rgba($black, 0.02);
+          }
+        }
+      }
+    }
+  }
+}
+
+.form-container {
+  &.full {
+    form {
+      max-width: 100%;
+    }
+  }
+
+  form {
+    max-width: 40rem;
+
+    .mat-card-actions {
+      text-align: right;
+      margin: 0;
+      padding: 0;
+
+      button {
+        &:last-of-type {
+          margin-right: 0;
+        }
+      }
+    }
+
+    .mat-select-value {
+      @include pxtorem(16);
+      color: $textColor !important;
+      font-family: $mainFont !important;
+    }
+  }
+}
+
+// ERROR STYLES
+%errorMsg {
+  color: $error;
+}
+
+.mat-error {
+  @extend %errorMsg;
+  @include pxtorem(12);
+  font-weight: 600;
+  font-family: $mainFont;
+}
+
+.mat-form-field-invalid {
+  .mat-icon {
+    @extend %errorMsg;
+  }
+  .mat-error {
+    @extend %errorMsg;
+  }
+}
+
+// RECORDS FILTERS STYLES
+%formIconSuffix {
+  position: absolute;
+  color: $textColor;
+  right: 0;
+  top: 0;
+}
+
+.search-field {
+  .mat-icon {
+    @extend %formIconSuffix;
+  }
+}
+
+%formFieldStyles {
+  .mat-form-field {
+    &-flex {
+      border: 1px solid $gray;
+      background-color: rgba(0, 0, 0, 0.02) !important;
+    }
+    &-infix {
+      border-top: 0 !important;
+      padding: 0.5rem 0.25rem 0;
+    }
+    &-appearance-fill {
+      .mat-form-field-underline {
+        &:before {
+          border-radius: 0.25rem;
+          background-color: rgba($black, 0.02);
+        }
+      }
+    }
+  }
+}
+
+.date-field {
+  label {
+    text-align: left !important;
+  }
+
+  .mat-form-field-suffix {
+    @extend %formIconSuffix;
+    transform: translateY(6px);
+  }
+
+  .mat-input-element {
+    max-width: 80%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+.filter-by-status {
+  @extend %formFieldStyles;
+  .mat-form-field-flex {
+    padding: 0.5rem 0.75rem 0.75rem !important;
+  }
+}
+
+%filterTypes {
+  margin-bottom: 0;
+  @extend %fullWidthFields;
+  .mat-form-field-infix {
+    @extend %fullWidthFields;
+  }
+}
+
+.records-filter {
+  padding: 0 0.75rem;
+
+  .fxFlex--item {
+    padding: 0 0.5rem;
+
+    .mat-form-field {
+      width: 100%;
+      margin-bottom: 0;
+    }
+
+    .mat-select-arrow-wrapper {
+      transform: translateY(-80%);
+    }
+  }
+  .search-field {
+    @extend %filterTypes;
+  }
+  .date-field {
+    @extend %filterTypes;
+    @extend %formFieldStyles;
+    position: relative;
+    padding-right: 1.25rem;
+    .date {
+      margin-right: 0.5rem;
+      flex: 1 1 calc(20% - 0.5rem);
+    }
+    .icon-clear {
+      align-self: center;
+      cursor: pointer;
+      position: absolute;
+      top: 1rem;
+      right: 0;
+    }
+    .mat-form-field-flex {
+      padding: 1rem 0.75rem 0.25rem;
+    }
+  }
+  form {
+    @extend %fullWidthFields;
+    .mat-form-field {
+      @extend %fullWidthFields;
+      &-infix {
+        @extend %fullWidthFields;
+      }
+    }
+  }
+}
+
+.section-header {
+  @extend .records-filter;
+}
+
+.is-date-range-container {
+  display: flex;
+}
+
+// DELIVERY LOCATION FORM STYLES
+.delivery-location-form {
+  form {
+    .mat-form-field-infix {
+      width: auto;
+    }
+  }
+  &--price-section {
+    padding: 2rem;
+    border: 1px solid $gray;
+    border-radius: 0.25rem;
+    .fxFlex {
+      align-items: start;
+    }
+    .formRow {
+      &:nth-of-type(odd) {
+        padding-right: 0.5rem;
+      }
+      &:nth-of-type(even) {
+        padding-left: 0.5rem;
+      }
+    }
+  }
+}
+
+.select-dealer-field {
+  .mat-form-field {
+    margin-right: 0 !important;
+  }
+  .msg-external-error {
+    flex: 1 1 100%;
+    padding-left: 46%;
+    transform: translateY(-32px);
+  }
+}
+
+// ANNOUNCEMENT FORM
+.announcement {
+  &-info {
+    & > div {
+      width: 100%;
+    }
+  }
+
+  &-media {
+    figure {
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%;
+      position: relative;
+      background: #e9eef1;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+    & > span {
+      display: inline-block;
+      transform: translate(1rem, -1.5rem);
+    }
+  }
+}
+
+//ORDER FORM STYLES
+.detail-component {
+  min-height: 155px;
+  h3 {
+    @include pxtorem(24);
+    font-family: $mainFont !important;
+    margin: 0 0 1.5rem;
+    font-weight: 700;
+  }
+  span,
+  .span {
+    label {
+      font-weight: 700;
+      &:after {
+        content: ":";
+        display: inline-block;
+        margin: 0 0.5rem 0 0.2rem;
+      }
+    }
+  }
+  form {
+    margin-top: 2rem;
+  }
+}
+
+.order-detail {
+  .mat-card-actions {
+    margin: 0;
+    text-align: right;
+  }
+}
+
+.price-section-title {
+  @include pxtorem(17);
+  font-family: $mainFont !important;
+  font-weight: 700 !important;
+  margin: 2rem 0 1rem !important;
+  .configure-price & {
+    margin-top: 0 !important;
+  }
+}
+
+// ASSIGN DEALER FORM
+.assign-dealer {
+  position: relative;
+  h3 {
+    @include pxtorem(16);
+    color: $textColor;
+    margin-bottom: 0 !important;
+  }
+  form {
+    margin-top: 0.5rem !important;
+    .mat-card-actions {
+      padding: 0;
+    }
+  }
+  .mat-form-field {
+    width: 100%;
+    &-infix {
+      width: inherit !important;
+    }
+    &-label {
+      text-align: left;
+    }
+  }
+  .mat-icon {
+    position: absolute;
+    right: 1rem;
+    top: 2.6rem;
+    opacity: 0.5;
+  }
+  .mat-input-element {
+    padding-right: 1.5rem;
+  }
+  & + .mat-card-actions {
+    margin-top: 0;
+  }
+}
+
+.cancel-order-form {
+  margin-top: 0.75rem;
+  @extend .assign-dealer;
+}
+
+.change-status {
+  @extend .assign-dealer;
+}
+
+.configure {
+  &-expected-delivery-date {
+    .compare-error {
+      transform: translate(0.75rem, -1.9rem);
+    }
+  }
+}
+
+// BACKEND OPERATOR FORM
+.backend-operator-form {
+  .basic-info-section {
+    padding: 0 1rem;
+  }
+  .mat-form-field-invalid {
+    + .helper-text {
+      transform: translateY(-1rem);
+    }
+  }
+  .fieldset {
+    margin-top: 1.5rem;
+    border: 1px solid $gray;
+    padding: 1.5rem 1rem;
+    position: relative;
+    legend {
+      position: absolute;
+      padding: 0.25rem 0.5rem;
+      background: $white;
+      top: -1rem;
+      left: 1rem;
+    }
+    .add-more {
+      position: absolute;
+      right: 1rem;
+      bottom: 10px;
+      .mat-icon,
+      span {
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
+  .configurable-row {
+    padding: 1.25rem 1rem 0;
+    background: rgba($black, 0.01);
+    border-radius: 0.25rem;
+    position: relative;
+
+    .mat-mini-fab {
+      position: absolute !important;
+      top: -1rem;
+      right: -1rem;
+      zoom: 0.7;
+      box-shadow: none;
+      background: #ff5a4e !important;
+      .mat-icon {
+        line-height: 0.5;
+      }
+    }
+    & + .configurable-row {
+      margin-top: 1.5rem !important;
+    }
+  }
+  .mat-card-actions {
+    margin-top: 1.5rem !important;
+  }
+}
+
+.compare-error {
+  flex: 1 1 100%;
+  &.pwd-compare {
+    padding-left: 21%;
+    .dealer-form & {
+      padding-left: 23%;
+      margin-bottom: 1rem;
+    }
+    .password-form & {
+      padding-left: 33%;
+      transform: translateY(-1.75rem);
+    }
+  }
+  .is-product-detail & {
+    padding-left: 22%;
+    margin: -1.75rem 0 1rem;
+  }
+  .product-form & {
+    padding-left: 40%;
+    margin: -1rem 0 1rem;
+  }
+}
+
+.pwd-field {
+  position: relative;
+  .mat-form-field {
+    margin-right: 0 !important;
+  }
+
+  .password-input-field {
+    button {
+      transform: translate(10px, -2px);
+      & + input + span {
+        right: 30px;
+      }
+    }
+    input {
+      padding-right: 80px;
+    }
+    > span {
+      position: absolute;
+      top: -9px;
+      right: -10px;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      line-height: 55px;
+      z-index: 10;
+      cursor: pointer;
+      color: $primary;
+      border-radius: 50%;
+      &:hover {
+        background: rgba($black, 0.05);
+      }
+    }
+  }
+
+  .helper-text {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    transform: translateY(-1.75rem);
+  }
+}
+
+.mat-primary {
+  .mat-pseudo-checkbox-checked,
+  .mat-pseudo-checkbox-indeterminate {
+    background: $primary;
+  }
+  .mat-option {
+    &.mat-selected:not(.mat-option-disabled) {
+      color: $primary;
+    }
+  }
+}
+
+.mat-radio-button {
+  margin-right: 1rem;
+  &.mat-radio-checked {
+    .mat-radio-outer-circle {
+      border-color: $primary !important;
+    }
+    .mat-radio-inner-circle {
+      background: $primary !important;
+    }
+  }
+}
+
+// CHECKBOX STYLES
+.mat-checkbox-checked {
+  &.mat-accent {
+    .mat-checkbox-background {
+      background-color: $primary;
+    }
+  }
+  &:not(.mat-checkbox-disabled) {
+    &.mat-accent {
+      .mat-ripple-element {
+        background: $primary;
+      }
+    }
+  }
+}
+
+.mat-select-arrow {
+  transform: translateY(10px);
+}
+
+.user-login-fields {
+  padding-top: 2rem;
+  border-top: 1px solid darken($white, 4%);
+}
+
+.location-fields {
+  margin-top: 0.75rem;
+  @extend .user-login-fields;
+}
+
+.video {
+  height: auto;
+  width: 100%;
+  &-thumbnail {
+    margin-top: 1.25rem;
+    & > span {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+// DOCUMENTS FORM
+.documents-form {
+  .has-img-preview {
+    padding-left: 0;
+  }
+  .img-preview {
+    height: 17rem;
+    img {
+      margin: 2.25rem 0;
+    }
+  }
+}
+
+.desc-field {
+  textarea {
+    min-height: 9rem;
+  }
+}
+
+.multiple-permissions {
+  .mat-select-trigger {
+    height: auto;
+  }
+  .mat-select-value {
+    white-space: inherit;
+  }
+  .mat-select-value-text {
+    white-space: inherit;
+    line-height: 1.25;
+  }
+}
+
+.search-dealers {
+  position: relative;
+  .mat-autocomplete-trigger {
+    padding-right: 2rem;
+  }
+  .mat-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+.has-dealer-selection {
+  padding-top: 2rem;
+  > div:first-of-type {
+    position: relative;
+    .dealer-select-note {
+      position: absolute;
+      top: -2rem;
+      right: 0;
+      color: $yellow;
+      @include pxtorem(13);
+    }
+  }
+}
+
+.is-readonly {
+  pointer-events: none;
+  input {
+    opacity: 0.5;
+  }
+}
+
+.mat-form-field-disabled {
+  opacity: 0.5;
+}
+
+.mat-calendar-body-selected {
+  background: $primary;
+}
+
+.mat-datepicker-toggle-active {
+  color: $primary;
+}
+
+.mat-select-panel {
+  .mat-icon {
+    &.rated {
+      color: $primary;
+      margin: 0 !important;
+      @include pxtorem(14);
+      width: auto;
+      height: auto;
+    }
+  }
+}
+.mat-select-value-text {
+  .ratings {
+    margin: 0;
+    .mat-icon {
+      &.rated {
+        @include pxtorem(14);
+      }
+    }
+  }
+}
+
+// video::-webkit-media-controls-volume-slider {
+//   display: none;
+// }
+// video::-webkit-media-controls-mute-button {
+//   display: none;
+// }
